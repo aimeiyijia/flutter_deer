@@ -1,40 +1,39 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_deer/order/page/order_list_page.dart';
-import 'package:flutter_deer/order/provider/order_page_provider.dart';
-import 'package:flutter_deer/res/resources.dart';
-import 'package:flutter_deer/routers/fluro_navigator.dart';
-import 'package:flutter_deer/util/image_utils.dart';
-import 'package:flutter_deer/util/screen_utils.dart';
-import 'package:flutter_deer/util/theme_utils.dart';
-import 'package:flutter_deer/widgets/load_image.dart';
-import 'package:flutter_deer/widgets/my_card.dart';
-import 'package:flutter_deer/widgets/my_flexible_space_bar.dart';
+import 'package:manager_app/order/page/order_list_page.dart';
+import 'package:manager_app/order/provider/order_page_provider.dart';
+import 'package:manager_app/res/resources.dart';
+import 'package:manager_app/routers/fluro_navigator.dart';
+import 'package:manager_app/util/image_utils.dart';
+import 'package:manager_app/util/screen_utils.dart';
+import 'package:manager_app/util/theme_utils.dart';
+import 'package:manager_app/widgets/load_image.dart';
+import 'package:manager_app/widgets/my_card.dart';
+import 'package:manager_app/widgets/my_flexible_space_bar.dart';
 import 'package:provider/provider.dart';
 
 import '../order_router.dart';
 
-
 /// design/3订单/index.html
 class OrderPage extends StatefulWidget {
-
   const OrderPage({super.key});
 
   @override
   _OrderPageState createState() => _OrderPageState();
 }
 
-class _OrderPageState extends State<OrderPage> with AutomaticKeepAliveClientMixin<OrderPage>, SingleTickerProviderStateMixin {
-
+class _OrderPageState extends State<OrderPage>
+    with
+        AutomaticKeepAliveClientMixin<OrderPage>,
+        SingleTickerProviderStateMixin {
   @override
   bool get wantKeepAlive => true;
-  
+
   TabController? _tabController;
   OrderPageProvider provider = OrderPageProvider();
 
   int _lastReportedPage = 0;
-  
+
   @override
   void initState() {
     super.initState();
@@ -59,11 +58,10 @@ class _OrderPageState extends State<OrderPage> with AutomaticKeepAliveClientMixi
     super.dispose();
   }
 
-  /// https://github.com/simplezhli/flutter_deer/issues/194
+  /// https://github.com/simplezhli/manager_app/issues/194
   @override
   // ignore: must_call_super
-  void didChangeDependencies() {
-  }
+  void didChangeDependencies() {}
 
   bool isDark = false;
 
@@ -81,22 +79,30 @@ class _OrderPageState extends State<OrderPage> with AutomaticKeepAliveClientMixi
               child: SizedBox(
                 height: 105,
                 width: double.infinity,
-                child: isDark ? null : const DecoratedBox(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(colors: [Colours.gradient_blue, Color(0xFF4647FA)]),
-                  ),
-                ),
+                child: isDark
+                    ? null
+                    : const DecoratedBox(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(colors: [
+                            Colours.gradient_blue,
+                            Color(0xFF4647FA)
+                          ]),
+                        ),
+                      ),
               ),
             ),
             NestedScrollView(
               key: const Key('order_list'),
               physics: const ClampingScrollPhysics(),
-              headerSliverBuilder: (context, innerBoxIsScrolled) => _sliverBuilder(context),
+              headerSliverBuilder: (context, innerBoxIsScrolled) =>
+                  _sliverBuilder(context),
               body: NotificationListener<ScrollNotification>(
                 onNotification: (ScrollNotification notification) {
                   /// PageView的onPageChanged是监听ScrollUpdateNotification，会造成滑动中卡顿。这里修改为监听滚动结束再更新、
-                  if (notification.depth == 0 && notification is ScrollEndNotification) {
-                    final PageMetrics metrics = notification.metrics as PageMetrics;
+                  if (notification.depth == 0 &&
+                      notification is ScrollEndNotification) {
+                    final PageMetrics metrics =
+                        notification.metrics as PageMetrics;
                     final int currentPage = (metrics.page ?? 0).round();
                     if (currentPage != _lastReportedPage) {
                       _lastReportedPage = currentPage;
@@ -131,28 +137,39 @@ class _OrderPageState extends State<OrderPage> with AutomaticKeepAliveClientMixi
                 NavigatorUtils.push(context, OrderRouter.orderSearchPage);
               },
               tooltip: '搜索',
-              icon: LoadAssetImage('order/icon_search',
+              icon: LoadAssetImage(
+                'order/icon_search',
                 width: 22.0,
                 height: 22.0,
                 color: ThemeUtils.getIconColor(context),
               ),
             )
           ],
-          backgroundColor: Colors.transparent,
+          backgroundColor: Colors.red,
           elevation: 0.0,
           centerTitle: true,
           expandedHeight: 100.0, // 不随着滑动隐藏标题
           pinned: true, // 固定在顶部
           flexibleSpace: MyFlexibleSpaceBar(
-            background: isDark ? Container(height: 113.0, color: Colours.dark_bg_color,) : LoadAssetImage('order/order_bg',
-              width: context.width,
-              height: 113.0,
-              fit: BoxFit.fill,
-            ),
+            background: isDark
+                ? Container(
+                    height: 113.0,
+                    color: Colours.dark_bg_color,
+                  )
+                : LoadAssetImage(
+                    'order/order_bg',
+                    width: context.width,
+                    height: 113.0,
+                    fit: BoxFit.fill,
+                  ),
             centerTitle: true,
-            titlePadding: const EdgeInsetsDirectional.only(start: 16.0, bottom: 14.0),
+            titlePadding:
+                const EdgeInsetsDirectional.only(start: 16.0, bottom: 14.0),
             collapseMode: CollapseMode.pin,
-            title: Text('订单', style: TextStyle(color: ThemeUtils.getIconColor(context)),),
+            title: Text(
+              '订单',
+              style: TextStyle(color: ThemeUtils.getIconColor(context)),
+            ),
           ),
         ),
       ),
@@ -162,10 +179,12 @@ class _OrderPageState extends State<OrderPage> with AutomaticKeepAliveClientMixi
           DecoratedBox(
             decoration: BoxDecoration(
               color: isDark ? Colours.dark_bg_color : null,
-              image: isDark ? null : DecorationImage(
-                image: ImageUtils.getAssetImage('order/order_bg1'),
-                fit: BoxFit.fill,
-              ),
+              image: isDark
+                  ? null
+                  : DecorationImage(
+                      image: ImageUtils.getAssetImage('order/order_bg1'),
+                      fit: BoxFit.fill,
+                    ),
             ),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -176,8 +195,10 @@ class _OrderPageState extends State<OrderPage> with AutomaticKeepAliveClientMixi
                   child: TabBar(
                     labelPadding: EdgeInsets.zero,
                     controller: _tabController,
-                    labelColor: context.isDark ? Colours.dark_text : Colours.text,
-                    unselectedLabelColor: context.isDark ? Colours.dark_text_gray : Colours.text,
+                    labelColor:
+                        context.isDark ? Colours.dark_text : Colours.text,
+                    unselectedLabelColor:
+                        context.isDark ? Colours.dark_text_gray : Colours.text,
                     labelStyle: TextStyles.textBold14,
                     unselectedLabelStyle: const TextStyle(
                       fontSize: Dimens.font_sp14,
@@ -200,7 +221,8 @@ class _OrderPageState extends State<OrderPage> with AutomaticKeepAliveClientMixi
                 ),
               ),
             ),
-          ), 80.0,
+          ),
+          80.0,
         ),
       ),
     ];
@@ -209,6 +231,7 @@ class _OrderPageState extends State<OrderPage> with AutomaticKeepAliveClientMixi
   final PageController _pageController = PageController();
   Future<void> _onPageChange(int index) async {
     provider.setIndex(index);
+
     /// 这里没有指示器，所以缩短过渡动画时间，减少不必要的刷新
     _tabController?.animateTo(index, duration: Duration.zero);
   }
@@ -231,12 +254,11 @@ List<List<String>> darkImg = [
 ];
 
 class _TabView extends StatelessWidget {
-
   const _TabView(this.index, this.text);
 
   final int index;
   final String text;
-  
+
   @override
   Widget build(BuildContext context) {
     final List<List<String>> imgList = context.isDark ? darkImg : img;
@@ -248,9 +270,15 @@ class _TabView extends StatelessWidget {
           child: Column(
             children: <Widget>[
               /// 使用context.select替代Consumer
-              LoadAssetImage(context.select<OrderPageProvider, int>((value) => value.index) == index ? 
-              imgList[index][0] : 
-              imgList[index][1], width: 24.0, height: 24.0,),
+              LoadAssetImage(
+                context.select<OrderPageProvider, int>(
+                            (value) => value.index) ==
+                        index
+                    ? imgList[index][0]
+                    : imgList[index][1],
+                width: 24.0,
+                height: 24.0,
+              ),
               Gaps.vGap4,
               Text(text),
             ],
@@ -258,16 +286,23 @@ class _TabView extends StatelessWidget {
         ),
         Positioned(
           right: 0.0,
-          child: index < 3 ? DecoratedBox(
-            decoration: BoxDecoration(
-              color: Theme.of(context).errorColor,
-              borderRadius: BorderRadius.circular(11.0),
-            ),
-            child: const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 5.5, vertical: 2.0),
-              child: Text('10', style: TextStyle(color: Colors.white, fontSize: Dimens.font_sp12),),
-            ),
-          ) : Gaps.empty,
+          child: index < 3
+              ? DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).errorColor,
+                    borderRadius: BorderRadius.circular(11.0),
+                  ),
+                  child: const Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 5.5, vertical: 2.0),
+                    child: Text(
+                      '10',
+                      style: TextStyle(
+                          color: Colors.white, fontSize: Dimens.font_sp12),
+                    ),
+                  ),
+                )
+              : Gaps.empty,
         )
       ],
     );
@@ -275,7 +310,6 @@ class _TabView extends StatelessWidget {
 }
 
 class SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
-
   SliverAppBarDelegate(this.widget, this.height);
 
   final Widget widget;
@@ -289,7 +323,8 @@ class SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   double get maxExtent => height;
 
   @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
     return widget;
   }
 

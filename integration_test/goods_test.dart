@@ -1,29 +1,26 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_deer/goods/page/goods_edit_page.dart';
-import 'package:flutter_deer/goods/page/goods_page.dart';
-import 'package:flutter_deer/goods/page/goods_size_page.dart';
-import 'package:flutter_deer/main.dart';
-import 'package:flutter_deer/res/constant.dart';
+import 'package:manager_app/goods/page/goods_edit_page.dart';
+import 'package:manager_app/goods/page/goods_page.dart';
+import 'package:manager_app/goods/page/goods_size_page.dart';
+import 'package:manager_app/main.dart';
+import 'package:manager_app/res/constant.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-
 ///  flutter drive --driver integration_test/integration_test.dart --target integration_test/goods_test.dart
 void main() {
-
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group('商品部分：', () {
-
     Constant.isDriverTest = true;
 
     tearDown(() {
       debugPrint('< Success');
     });
 
-    testWidgets('商品页测试',(WidgetTester tester) async {
+    testWidgets('商品页测试', (WidgetTester tester) async {
       runApp(MyApp(home: const GoodsPage()));
       await tester.pumpAndSettle();
 
@@ -65,11 +62,12 @@ void main() {
       await tester.pumpAndSettle();
     });
 
-    testWidgets('商品编辑页测试',(WidgetTester tester) async {
+    testWidgets('商品编辑页测试', (WidgetTester tester) async {
       runApp(MyApp(home: const GoodsEditPage()));
       await tester.pumpAndSettle();
 
-      await tester.drag(find.byKey(const Key('goods_edit_page')), const Offset(0, -500));
+      await tester.drag(
+          find.byKey(const Key('goods_edit_page')), const Offset(0, -500));
       await tester.pumpAndSettle();
       await tester.tap(find.text('商品类型'));
       await tester.pumpAndSettle();
@@ -81,7 +79,7 @@ void main() {
       await tester.pumpAndSettle();
     }, timeout: const Timeout(Duration(seconds: 30)));
 
-    testWidgets('商品规格页测试',(WidgetTester tester) async {
+    testWidgets('商品规格页测试', (WidgetTester tester) async {
       runApp(MyApp(home: const GoodsSizePage()));
 
       await tester.pumpAndSettle();

@@ -3,12 +3,11 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_deer/res/resources.dart';
-import 'package:flutter_deer/util/device_utils.dart';
+import 'package:manager_app/res/resources.dart';
+import 'package:manager_app/util/device_utils.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ThemeUtils {
-
   static bool isDark(BuildContext context) {
     return Theme.of(context).brightness == Brightness.dark;
   }
@@ -20,7 +19,7 @@ class ThemeUtils {
   static Color? getIconColor(BuildContext context) {
     return isDark(context) ? Colours.dark_text : null;
   }
-  
+
   static Color getStickyHeaderColor(BuildContext context) {
     return isDark(context) ? Colours.dark_bg_gray_ : Colours.bg_gray_;
   }
@@ -39,9 +38,12 @@ class ThemeUtils {
   static void setSystemNavigationBar(ThemeMode mode) {
     /// 主题切换动画（AnimatedTheme）时间为200毫秒，延时设置导航栏颜色，这样过渡相对自然。
     _subscription?.cancel();
-    _subscription = Stream.value(1).delay(const Duration(milliseconds: 200)).listen((_) {
+    _subscription =
+        Stream.value(1).delay(const Duration(milliseconds: 200)).listen((_) {
       bool isDark = false;
-      if (mode == ThemeMode.dark || (mode == ThemeMode.system && window.platformBrightness == Brightness.dark)) {
+      if (mode == ThemeMode.dark ||
+          (mode == ThemeMode.system &&
+              window.platformBrightness == Brightness.dark)) {
         isDark = true;
       }
       setSystemBarStyle(isDark: isDark);
@@ -52,14 +54,16 @@ class ThemeUtils {
   /// 本项目在android MainActivity中已设置，不需要覆盖设置。
   static void setSystemBarStyle({bool? isDark}) {
     if (Device.isAndroid) {
-
-      final bool isDarkMode = isDark ?? window.platformBrightness == Brightness.dark;
+      final bool isDarkMode =
+          isDark ?? window.platformBrightness == Brightness.dark;
       debugPrint('isDark: $isDarkMode');
       final SystemUiOverlayStyle systemUiOverlayStyle = SystemUiOverlayStyle(
         /// 透明状态栏
         statusBarColor: Colors.transparent,
-        systemNavigationBarColor: isDarkMode ? Colours.dark_bg_color : Colors.white,
-        systemNavigationBarIconBrightness: isDarkMode ? Brightness.light : Brightness.dark,
+        systemNavigationBarColor:
+            isDarkMode ? Colours.dark_bg_color : Colors.white,
+        systemNavigationBarIconBrightness:
+            isDarkMode ? Brightness.light : Brightness.dark,
       );
       SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
     }

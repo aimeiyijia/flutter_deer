@@ -1,10 +1,8 @@
-
 import 'package:flutter/material.dart';
-import 'package:flutter_deer/util/toast_utils.dart';
-import 'package:flutter_deer/widgets/search_bar.dart';
+import 'package:manager_app/util/toast_utils.dart';
+import 'package:manager_app/widgets/search_bar.dart';
 
 class GoodsSearchPage extends StatefulWidget {
-
   const GoodsSearchPage({super.key});
 
   @override

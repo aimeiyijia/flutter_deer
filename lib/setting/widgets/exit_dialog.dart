@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_deer/login/login_router.dart';
-import 'package:flutter_deer/res/styles.dart';
-import 'package:flutter_deer/routers/fluro_navigator.dart';
-import 'package:flutter_deer/widgets/base_dialog.dart';
+import 'package:manager_app/login/login_router.dart';
+import 'package:manager_app/res/styles.dart';
+import 'package:manager_app/routers/fluro_navigator.dart';
+import 'package:manager_app/widgets/base_dialog.dart';
 
 class ExitDialog extends StatefulWidget {
-
   const ExitDialog({
     super.key,
   });
 
   @override
   _ExitDialog createState() => _ExitDialog();
-  
 }
 
 class _ExitDialog extends State<ExitDialog> {
-
   @override
   Widget build(BuildContext context) {
     return BaseDialog(

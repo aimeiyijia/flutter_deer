@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_deer/demo/focus/focus_demo_page.dart';
-import 'package:flutter_deer/demo/lottie/lottie_demo.dart';
-import 'package:flutter_deer/demo/navigator/books_main.dart';
-import 'package:flutter_deer/demo/overlay/overlay_main.dart';
-import 'package:flutter_deer/demo/ripple/ripples_animation_page.dart';
-import 'package:flutter_deer/demo/scratcher/scratch_card_demo_page.dart';
-import 'package:flutter_deer/res/resources.dart';
-import 'package:flutter_deer/util/app_navigator.dart';
-import 'package:flutter_deer/widgets/click_item.dart';
-import 'package:flutter_deer/widgets/my_app_bar.dart';
-
+import 'package:manager_app/demo/focus/focus_demo_page.dart';
+import 'package:manager_app/demo/lottie/lottie_demo.dart';
+import 'package:manager_app/demo/navigator/books_main.dart';
+import 'package:manager_app/demo/overlay/overlay_main.dart';
+import 'package:manager_app/demo/ripple/ripples_animation_page.dart';
+import 'package:manager_app/demo/scratcher/scratch_card_demo_page.dart';
+import 'package:manager_app/res/resources.dart';
+import 'package:manager_app/util/app_navigator.dart';
+import 'package:manager_app/widgets/click_item.dart';
+import 'package:manager_app/widgets/my_app_bar.dart';
 
 class DemoPage extends StatefulWidget {
-
   const DemoPage({super.key});
 
   @override
@@ -21,13 +19,13 @@ class DemoPage extends StatefulWidget {
 }
 
 class _DemoPageState extends State<DemoPage> {
-
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       /// 显示状态栏和导航栏(使用QuickActions进入demo页)
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+          overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
     });
   }
 
@@ -46,11 +44,13 @@ class _DemoPageState extends State<DemoPage> {
           ),
           ClickItem(
             title: 'Focus',
-            onTap: () => AppNavigator.push(context, const FocusDemoPage(title: 'Focus Demo')),
+            onTap: () => AppNavigator.push(
+                context, const FocusDemoPage(title: 'Focus Demo')),
           ),
           ClickItem(
             title: 'RipplesAnimation',
-            onTap: () => AppNavigator.push(context, const RipplesAnimationPage()),
+            onTap: () =>
+                AppNavigator.push(context, const RipplesAnimationPage()),
           ),
           ClickItem(
             title: 'Navigator 2.0',
@@ -58,7 +58,8 @@ class _DemoPageState extends State<DemoPage> {
           ),
           ClickItem(
             title: 'ScratchCard',
-            onTap: () => AppNavigator.push(context, const ScratchCardDemoPage()),
+            onTap: () =>
+                AppNavigator.push(context, const ScratchCardDemoPage()),
           ),
           ClickItem(
             title: 'Lottie',

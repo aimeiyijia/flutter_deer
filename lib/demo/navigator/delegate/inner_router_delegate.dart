@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_deer/demo/navigator/book_entity.dart';
-import 'package:flutter_deer/demo/navigator/books_app_state.dart';
-import 'package:flutter_deer/demo/navigator/screen/book_details_screen.dart';
-import 'package:flutter_deer/demo/navigator/screen/books_list_screen.dart';
-import 'package:flutter_deer/demo/navigator/screen/setting_screen.dart';
+import 'package:manager_app/demo/navigator/book_entity.dart';
+import 'package:manager_app/demo/navigator/books_app_state.dart';
+import 'package:manager_app/demo/navigator/screen/book_details_screen.dart';
+import 'package:manager_app/demo/navigator/screen/books_list_screen.dart';
+import 'package:manager_app/demo/navigator/screen/setting_screen.dart';
 
 class InnerRouterDelegate extends RouterDelegate<BookRoutePath>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<BookRoutePath> {
-
   InnerRouterDelegate(this._appState);
 
   @override
@@ -68,7 +67,6 @@ class InnerRouterDelegate extends RouterDelegate<BookRoutePath>
 }
 
 class FadeAnimationPage extends Page<void> {
-
   const FadeAnimationPage({super.key, required this.child});
 
   final Widget child;

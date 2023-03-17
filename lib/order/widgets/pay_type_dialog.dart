@@ -1,26 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_deer/res/resources.dart';
-import 'package:flutter_deer/routers/fluro_navigator.dart';
-import 'package:flutter_deer/widgets/base_dialog.dart';
-import 'package:flutter_deer/widgets/load_image.dart';
+import 'package:manager_app/res/resources.dart';
+import 'package:manager_app/routers/fluro_navigator.dart';
+import 'package:manager_app/widgets/base_dialog.dart';
+import 'package:manager_app/widgets/load_image.dart';
 
 /// design/3订单/index.html#artboard5
 class PayTypeDialog extends StatefulWidget {
-
   const PayTypeDialog({
     super.key,
     this.onPressed,
   });
 
   final Function(int, String)? onPressed;
-  
+
   @override
   _PayTypeDialog createState() => _PayTypeDialog();
-  
 }
 
 class _PayTypeDialog extends State<PayTypeDialog> {
-
   int _value = 0;
   final _list = ['未收款', '支付宝', '微信', '现金'];
 
@@ -36,15 +33,18 @@ class _PayTypeDialog extends State<PayTypeDialog> {
               Expanded(
                 child: Text(
                   _list[index],
-                  style: _value == index ? TextStyle(
-                    fontSize: Dimens.font_sp14,
-                    color: Theme.of(context).primaryColor,
-                  ) : null,
+                  style: _value == index
+                      ? TextStyle(
+                          fontSize: Dimens.font_sp14,
+                          color: Theme.of(context).primaryColor,
+                        )
+                      : null,
                 ),
               ),
               Visibility(
-                visible: _value == index,
-                child: const LoadAssetImage('order/ic_check', width: 16.0, height: 16.0)),
+                  visible: _value == index,
+                  child: const LoadAssetImage('order/ic_check',
+                      width: 16.0, height: 16.0)),
               Gaps.hGap16,
             ],
           ),
@@ -59,16 +59,15 @@ class _PayTypeDialog extends State<PayTypeDialog> {
       ),
     );
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return BaseDialog(
       title: '收款方式',
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        mainAxisSize: MainAxisSize.min,
-        children: List.generate(_list.length, (i) => _buildItem(i))
-      ),
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisSize: MainAxisSize.min,
+          children: List.generate(_list.length, (i) => _buildItem(i))),
       onPressed: () {
         NavigatorUtils.goBack(context);
         widget.onPressed?.call(_value, _list[_value]);

@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_deer/order/page/order_page.dart';
-import 'package:flutter_deer/res/resources.dart';
-import 'package:flutter_deer/routers/fluro_navigator.dart';
-import 'package:flutter_deer/statistics/statistics_router.dart';
-import 'package:flutter_deer/util/image_utils.dart';
-import 'package:flutter_deer/util/screen_utils.dart';
-import 'package:flutter_deer/util/theme_utils.dart';
-import 'package:flutter_deer/widgets/load_image.dart';
-import 'package:flutter_deer/widgets/my_card.dart';
-import 'package:flutter_deer/widgets/my_flexible_space_bar.dart';
-
+import 'package:manager_app/order/page/order_page.dart';
+import 'package:manager_app/res/resources.dart';
+import 'package:manager_app/routers/fluro_navigator.dart';
+import 'package:manager_app/statistics/statistics_router.dart';
+import 'package:manager_app/util/image_utils.dart';
+import 'package:manager_app/util/screen_utils.dart';
+import 'package:manager_app/util/theme_utils.dart';
+import 'package:manager_app/widgets/load_image.dart';
+import 'package:manager_app/widgets/my_card.dart';
+import 'package:manager_app/widgets/my_flexible_space_bar.dart';
 
 /// design/5统计/index.html
 class StatisticsPage extends StatefulWidget {
-
   const StatisticsPage({super.key});
 
   @override
@@ -22,7 +20,6 @@ class StatisticsPage extends StatefulWidget {
 }
 
 class _StatisticsPageState extends State<StatisticsPage> {
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +32,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
   }
 
   bool isDark = false;
-  
+
   List<Widget> _sliverBuilder() {
     isDark = context.isDark;
     return <Widget>[
@@ -47,15 +44,25 @@ class _StatisticsPageState extends State<StatisticsPage> {
         expandedHeight: 100.0,
         pinned: true,
         flexibleSpace: MyFlexibleSpaceBar(
-          background: isDark ? Container(height: 115.0, color: Colours.dark_bg_color,) : LoadAssetImage('statistic/statistic_bg',
-            width: context.width,
-            height: 115.0,
-            fit: BoxFit.fill,
-          ),
+          background: isDark
+              ? Container(
+                  height: 115.0,
+                  color: Colours.dark_bg_color,
+                )
+              : LoadAssetImage(
+                  'statistic/statistic_bg',
+                  width: context.width,
+                  height: 115.0,
+                  fit: BoxFit.fill,
+                ),
           centerTitle: true,
-          titlePadding: const EdgeInsetsDirectional.only(start: 16.0, bottom: 14.0),
+          titlePadding:
+              const EdgeInsetsDirectional.only(start: 16.0, bottom: 14.0),
           collapseMode: CollapseMode.pin,
-          title: Text('统计', style: TextStyle(color: ThemeUtils.getIconColor(context)),),
+          title: Text(
+            '统计',
+            style: TextStyle(color: ThemeUtils.getIconColor(context)),
+          ),
         ),
       ),
       SliverPersistentHeader(
@@ -64,10 +71,13 @@ class _StatisticsPageState extends State<StatisticsPage> {
           DecoratedBox(
             decoration: BoxDecoration(
               color: isDark ? Colours.dark_bg_color : null,
-              image: isDark ? null : DecorationImage(
-                image: ImageUtils.getAssetImage('statistic/statistic_bg1'),
-                fit: BoxFit.fill,
-              ),
+              image: isDark
+                  ? null
+                  : DecorationImage(
+                      image:
+                          ImageUtils.getAssetImage('statistic/statistic_bg1'),
+                      fit: BoxFit.fill,
+                    ),
             ),
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -83,8 +93,8 @@ class _StatisticsPageState extends State<StatisticsPage> {
                 ),
               ),
             ),
-          )
-          , 120.0,
+          ),
+          120.0,
         ),
       ),
       SliverToBoxAdapter(
@@ -107,11 +117,9 @@ class _StatisticsPageState extends State<StatisticsPage> {
       )
     ];
   }
-  
 }
 
 class _StatisticsItem extends StatelessWidget {
-
   const _StatisticsItem(this.title, this.img, this.index);
 
   final String title;
@@ -125,14 +133,16 @@ class _StatisticsItem extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           if (index == 1 || index == 2) {
-            NavigatorUtils.push(context, '${StatisticsRouter.orderStatisticsPage}?index=$index');
+            NavigatorUtils.push(context,
+                '${StatisticsRouter.orderStatisticsPage}?index=$index');
           } else {
             NavigatorUtils.push(context, StatisticsRouter.goodsStatisticsPage);
           }
         },
         child: MyCard(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
             child: Column(
               children: <Widget>[
                 Padding(
@@ -141,11 +151,13 @@ class _StatisticsItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(title, style: TextStyles.textBold14),
-                      const LoadAssetImage('statistic/icon_selected', height: 16.0, width: 16.0)
+                      const LoadAssetImage('statistic/icon_selected',
+                          height: 16.0, width: 16.0)
                     ],
                   ),
                 ),
-                Expanded(child: LoadAssetImage('statistic/$img', fit: BoxFit.fill))
+                Expanded(
+                    child: LoadAssetImage('statistic/$img', fit: BoxFit.fill))
               ],
             ),
           ),
@@ -156,7 +168,6 @@ class _StatisticsItem extends StatelessWidget {
 }
 
 class _StatisticsTab extends StatelessWidget {
-
   const _StatisticsTab(this.title, this.img, this.content);
 
   final String title;

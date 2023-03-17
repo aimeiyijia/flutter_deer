@@ -1,19 +1,19 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_deer/demo/demo_page.dart';
-import 'package:flutter_deer/home/splash_page.dart';
-import 'package:flutter_deer/net/dio_utils.dart';
-import 'package:flutter_deer/net/intercept.dart';
-import 'package:flutter_deer/res/constant.dart';
-import 'package:flutter_deer/routers/not_found_page.dart';
-import 'package:flutter_deer/routers/routers.dart';
-import 'package:flutter_deer/setting/provider/locale_provider.dart';
-import 'package:flutter_deer/setting/provider/theme_provider.dart';
-import 'package:flutter_deer/util/device_utils.dart';
-import 'package:flutter_deer/util/handle_error_utils.dart';
-import 'package:flutter_deer/util/log_utils.dart';
-import 'package:flutter_deer/util/theme_utils.dart';
+import 'package:manager_app/demo/demo_page.dart';
+import 'package:manager_app/home/splash_page.dart';
+import 'package:manager_app/net/dio_utils.dart';
+import 'package:manager_app/net/intercept.dart';
+import 'package:manager_app/res/constant.dart';
+import 'package:manager_app/routers/not_found_page.dart';
+import 'package:manager_app/routers/routers.dart';
+import 'package:manager_app/setting/provider/locale_provider.dart';
+import 'package:manager_app/setting/provider/theme_provider.dart';
+import 'package:manager_app/util/device_utils.dart';
+import 'package:manager_app/util/handle_error_utils.dart';
+import 'package:manager_app/util/log_utils.dart';
+import 'package:manager_app/util/theme_utils.dart';
 import 'package:flutter_gen/gen_l10n/deer_localizations.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:provider/provider.dart';
@@ -43,7 +43,8 @@ Future<void> main() async {
   handleError(() => runApp(MyApp()));
 
   /// 隐藏状态栏。为启动页、引导页设置。完成后修改回显示状态栏。
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.bottom]);
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+      overlays: [SystemUiOverlay.bottom]);
   // TODO(weilu): 启动体验不佳。状态栏、导航栏在冷启动开始的一瞬间为黑色，且无法通过隐藏、修改颜色等方式进行处理。。。
   // 相关问题跟踪：https://github.com/flutter/flutter/issues/73351
 }
@@ -99,10 +100,7 @@ class MyApp extends StatelessWidget {
 
       quickActions.setShortcutItems(<ShortcutItem>[
         const ShortcutItem(
-          type: 'demo',
-          localizedTitle: 'Demo',
-          icon: 'flutter_dash_black'
-        ),
+            type: 'demo', localizedTitle: 'Demo', icon: 'flutter_dash_black'),
       ]);
     }
   }
@@ -115,7 +113,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => LocaleProvider())
       ],
       child: Consumer2<ThemeProvider, LocaleProvider>(
-        builder: (_, ThemeProvider provider, LocaleProvider localeProvider, __) {
+        builder:
+            (_, ThemeProvider provider, LocaleProvider localeProvider, __) {
           return _buildMaterialApp(provider, localeProvider);
         },
       ),
@@ -123,15 +122,16 @@ class MyApp extends StatelessWidget {
 
     /// Toast 配置
     return OKToast(
-      backgroundColor: Colors.black54,
-      textPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
-      radius: 20.0,
-      position: ToastPosition.bottom,
-      child: app
-    );
+        backgroundColor: Colors.black54,
+        textPadding:
+            const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+        radius: 20.0,
+        position: ToastPosition.bottom,
+        child: app);
   }
 
-  Widget _buildMaterialApp(ThemeProvider provider, LocaleProvider localeProvider) {
+  Widget _buildMaterialApp(
+      ThemeProvider provider, LocaleProvider localeProvider) {
     return MaterialApp(
       title: 'Flutter Deer',
       // showPerformanceOverlay: true, //显示性能标签

@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_deer/account/models/withdrawal_account_model.dart';
-import 'package:flutter_deer/res/resources.dart';
-import 'package:flutter_deer/routers/fluro_navigator.dart';
-import 'package:flutter_deer/util/input_formatter/number_text_input_formatter.dart';
-import 'package:flutter_deer/util/theme_utils.dart';
-import 'package:flutter_deer/widgets/load_image.dart';
-import 'package:flutter_deer/widgets/my_app_bar.dart';
-import 'package:flutter_deer/widgets/my_button.dart';
-import 'package:flutter_deer/widgets/my_scroll_view.dart';
+import 'package:manager_app/account/models/withdrawal_account_model.dart';
+import 'package:manager_app/res/resources.dart';
+import 'package:manager_app/routers/fluro_navigator.dart';
+import 'package:manager_app/util/input_formatter/number_text_input_formatter.dart';
+import 'package:manager_app/util/theme_utils.dart';
+import 'package:manager_app/widgets/load_image.dart';
+import 'package:manager_app/widgets/my_app_bar.dart';
+import 'package:manager_app/widgets/my_button.dart';
+import 'package:manager_app/widgets/my_scroll_view.dart';
 
 import '../account_router.dart';
 
 /// design/6店铺-账户/index.html#artboard3
 class WithdrawalPage extends StatefulWidget {
-
   const WithdrawalPage({super.key});
 
   @override
@@ -21,12 +20,12 @@ class WithdrawalPage extends StatefulWidget {
 }
 
 class _WithdrawalPageState extends State<WithdrawalPage> {
-  
   final TextEditingController _controller = TextEditingController();
   int _withdrawalType = 0;
   bool _clickable = false;
-  WithdrawalAccountModel _data = WithdrawalAccountModel('尾号5236 李艺', '工商银行', 0, '123');
-  
+  WithdrawalAccountModel _data =
+      WithdrawalAccountModel('尾号5236 李艺', '工商银行', 0, '123');
+
   @override
   void initState() {
     super.initState();
@@ -39,7 +38,7 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
     _controller.dispose();
     super.dispose();
   }
-  
+
   void _verify() {
     final price = _controller.text;
     if (price.isEmpty || double.parse(price) < 1) {
@@ -71,7 +70,8 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
             Gaps.vGap5,
             InkWell(
               onTap: () {
-                NavigatorUtils.pushResult(context, AccountRouter.withdrawalAccountListPage, (result) {
+                NavigatorUtils.pushResult(
+                    context, AccountRouter.withdrawalAccountListPage, (result) {
                   setState(() {
                     _data = result as WithdrawalAccountModel;
                   });
@@ -83,7 +83,9 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
                 alignment: Alignment.center,
                 child: Row(
                   children: <Widget>[
-                    LoadAssetImage(_data.type == 0 ? 'account/yhk' : 'account/wechat', width: 24.0),
+                    LoadAssetImage(
+                        _data.type == 0 ? 'account/yhk' : 'account/wechat',
+                        width: 24.0),
                     Gaps.hGap16,
                     Expanded(
                       child: Column(
@@ -92,7 +94,8 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
                         children: <Widget>[
                           Text(_data.typeName),
                           Gaps.vGap8,
-                          Text(_data.name, style: Theme.of(context).textTheme.subtitle2),
+                          Text(_data.name,
+                              style: Theme.of(context).textTheme.subtitle2),
                         ],
                       ),
                     ),
@@ -106,7 +109,9 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: const <Widget>[
                 Text('提现金额', style: TextStyles.textBold14),
-                Text('单笔2万，单日2万', style: TextStyle(fontSize: Dimens.font_sp12, color: Colours.orange))
+                Text('单笔2万，单日2万',
+                    style: TextStyle(
+                        fontSize: Dimens.font_sp12, color: Colours.orange))
               ],
             ),
             Gaps.vGap8,
@@ -116,14 +121,18 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
                   width: 15.0,
                   height: 40.0,
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: LoadAssetImage('account/rmb', color: ThemeUtils.getIconColor(context),),
+                  child: LoadAssetImage(
+                    'account/rmb',
+                    color: ThemeUtils.getIconColor(context),
+                  ),
                 ),
                 Gaps.hGap8,
                 Expanded(
                   child: TextField(
                     maxLength: 10,
                     controller: _controller,
-                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true),
                     inputFormatters: [UsNumberTextInputFormatter()],
                     style: const TextStyle(
                       fontSize: 32.0,
@@ -152,17 +161,17 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
               children: <Widget>[
                 Text('最多可提现70元', style: Theme.of(context).textTheme.subtitle2),
                 GestureDetector(
-                  onTap: () {
-                    _controller.text = '70';
-                  },    
-                  child: SizedBox(
-                    height: 48.0,
-                    child: Text('全部提现', style: TextStyle(
-                      fontSize: Dimens.font_sp12,
-                      color: Theme.of(context).primaryColor,
-                    )),
-                  )
-                )
+                    onTap: () {
+                      _controller.text = '70';
+                    },
+                    child: SizedBox(
+                      height: 48.0,
+                      child: Text('全部提现',
+                          style: TextStyle(
+                            fontSize: Dimens.font_sp12,
+                            color: Theme.of(context).primaryColor,
+                          )),
+                    ))
               ],
             ),
             Row(
@@ -178,9 +187,12 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
             Gaps.vGap24,
             MyButton(
               key: const Key('提现'),
-              onPressed: _clickable ? () {
-                NavigatorUtils.push(context, AccountRouter.withdrawalResultPage);
-              } : null,
+              onPressed: _clickable
+                  ? () {
+                      NavigatorUtils.push(
+                          context, AccountRouter.withdrawalResultPage);
+                    }
+                  : null,
               text: '提现',
             ),
           ],
@@ -204,7 +216,9 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
             Positioned(
               top: 18.0,
               left: 0.0,
-              child: LoadAssetImage(_withdrawalType == type ? 'account/txxz' : 'account/txwxz', width: 16.0),
+              child: LoadAssetImage(
+                  _withdrawalType == type ? 'account/txxz' : 'account/txwxz',
+                  width: 16.0),
             ),
             Positioned(
               top: 16.0,
@@ -213,26 +227,37 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
               child: Text(type == 0 ? '快速到账' : '普通到账'),
             ),
             Positioned(
-              bottom: 16.0,
-              left: 24.0,
-              right: 0.0,
-              child: RichText(
-                text: type == 0 ? TextSpan(
-                  text: '手续费按',
-                  style: Theme.of(context).textTheme.bodyText2?.copyWith(fontSize: Dimens.font_sp12),
-                  children: const <TextSpan>[
-                    TextSpan(text: '0.3%', style: TextStyle(color: Colours.orange)),
-                    TextSpan(text: '收取'),
-                  ],
-                ) : TextSpan(
-                  text: '预计',
-                  style: Theme.of(context).textTheme.bodyText2?.copyWith(fontSize: Dimens.font_sp12),
-                  children: const <TextSpan>[
-                    TextSpan(text: 'T+1天到账(免手续费，T为工作日)', style: TextStyle(color: Colours.orange)),
-                  ],
-                ),
-              )
-            ),
+                bottom: 16.0,
+                left: 24.0,
+                right: 0.0,
+                child: RichText(
+                  text: type == 0
+                      ? TextSpan(
+                          text: '手续费按',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText2
+                              ?.copyWith(fontSize: Dimens.font_sp12),
+                          children: const <TextSpan>[
+                            TextSpan(
+                                text: '0.3%',
+                                style: TextStyle(color: Colours.orange)),
+                            TextSpan(text: '收取'),
+                          ],
+                        )
+                      : TextSpan(
+                          text: '预计',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText2
+                              ?.copyWith(fontSize: Dimens.font_sp12),
+                          children: const <TextSpan>[
+                            TextSpan(
+                                text: 'T+1天到账(免手续费，T为工作日)',
+                                style: TextStyle(color: Colours.orange)),
+                          ],
+                        ),
+                )),
           ],
         ),
       ),

@@ -3,15 +3,14 @@ import 'dart:io';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_deer/res/resources.dart';
-import 'package:flutter_deer/util/device_utils.dart';
-import 'package:flutter_deer/util/image_utils.dart';
-import 'package:flutter_deer/util/theme_utils.dart';
-import 'package:flutter_deer/util/toast_utils.dart';
+import 'package:manager_app/res/resources.dart';
+import 'package:manager_app/util/device_utils.dart';
+import 'package:manager_app/util/image_utils.dart';
+import 'package:manager_app/util/theme_utils.dart';
+import 'package:manager_app/util/toast_utils.dart';
 import 'package:image_picker/image_picker.dart';
 
 class SelectedImage extends StatefulWidget {
-
   const SelectedImage({
     super.key,
     this.url,
@@ -28,28 +27,24 @@ class SelectedImage extends StatefulWidget {
 }
 
 class SelectedImageState extends State<SelectedImage> {
-
   final ImagePicker _picker = ImagePicker();
   ImageProvider? _imageProvider;
   XFile? pickedFile;
 
   Future<void> _getImage() async {
     try {
-      pickedFile = await _picker.pickImage(source: ImageSource.gallery, maxWidth: 800);
+      pickedFile =
+          await _picker.pickImage(source: ImageSource.gallery, maxWidth: 800);
       if (pickedFile != null) {
-
         if (Device.isWeb) {
           _imageProvider = NetworkImage(pickedFile!.path);
         } else {
           _imageProvider = FileImage(File(pickedFile!.path));
         }
-
       } else {
         _imageProvider = null;
       }
-      setState(() {
-
-      });
+      setState(() {});
     } catch (e) {
       if (e is MissingPluginException) {
         Toast.show('当前平台暂不支持！');
@@ -62,9 +57,10 @@ class SelectedImageState extends State<SelectedImage> {
   @override
   Widget build(BuildContext context) {
     final ColorFilter colorFilter = ColorFilter.mode(
-        ThemeUtils.isDark(context) ? Colours.dark_unselected_item_color : Colours.text_gray,
-        BlendMode.srcIn
-    );
+        ThemeUtils.isDark(context)
+            ? Colours.dark_unselected_item_color
+            : Colours.text_gray,
+        BlendMode.srcIn);
 
     Widget image = Container(
       width: widget.size,
@@ -73,10 +69,13 @@ class SelectedImageState extends State<SelectedImage> {
         // 图片圆角展示
         borderRadius: BorderRadius.circular(16.0),
         image: DecorationImage(
-            image: _imageProvider ?? ImageUtils.getImageProvider(widget.url, holderImg: 'store/icon_zj'),
+            image: _imageProvider ??
+                ImageUtils.getImageProvider(widget.url,
+                    holderImg: 'store/icon_zj'),
             fit: BoxFit.cover,
-            colorFilter: _imageProvider == null && TextUtil.isEmpty(widget.url) ? colorFilter : null
-        ),
+            colorFilter: _imageProvider == null && TextUtil.isEmpty(widget.url)
+                ? colorFilter
+                : null),
       ),
     );
 

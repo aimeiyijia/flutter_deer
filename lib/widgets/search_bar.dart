@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_deer/res/resources.dart';
-import 'package:flutter_deer/util/theme_utils.dart';
-import 'package:flutter_deer/widgets/my_button.dart';
+import 'package:manager_app/res/resources.dart';
+import 'package:manager_app/util/theme_utils.dart';
+import 'package:manager_app/widgets/my_button.dart';
 
 import 'load_image.dart';
 
 /// 搜索页的AppBar
 class SearchBar extends StatefulWidget implements PreferredSizeWidget {
-
   const SearchBar({
     super.key,
     this.hintText = '',
@@ -29,7 +28,6 @@ class SearchBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _SearchBarState extends State<SearchBar> {
-
   final TextEditingController _controller = TextEditingController();
   final FocusNode _focus = FocusNode();
 
@@ -52,8 +50,9 @@ class _SearchBarState extends State<SearchBar> {
   @override
   Widget build(BuildContext context) {
     final bool isDark = context.isDark;
-    final Color iconColor = isDark ? Colours.dark_text_gray : Colours.text_gray_c;
-    
+    final Color iconColor =
+        isDark ? Colours.dark_text_gray : Colours.text_gray_c;
+
     final Widget back = Semantics(
       label: '返回',
       child: SizedBox(
@@ -123,18 +122,23 @@ class _SearchBarState extends State<SearchBar> {
             widget.onPressed?.call(val);
           },
           decoration: InputDecoration(
-            contentPadding: const EdgeInsets.only(left: -8.0, right: -16.0, bottom: 14.0),
+            contentPadding:
+                const EdgeInsets.only(left: -8.0, right: -16.0, bottom: 14.0),
             border: InputBorder.none,
             icon: Padding(
               padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, left: 8.0),
-              child: LoadAssetImage('order/order_search', color: iconColor,),
+              child: LoadAssetImage(
+                'order/order_search',
+                color: iconColor,
+              ),
             ),
             hintText: widget.hintText,
             suffixIcon: GestureDetector(
               child: Semantics(
                 label: '清空',
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 16.0, top: 8.0, bottom: 8.0),
+                  padding:
+                      const EdgeInsets.only(left: 16.0, top: 8.0, bottom: 8.0),
                   child: LoadAssetImage('order/order_delete', color: iconColor),
                 ),
               ),
@@ -149,7 +153,7 @@ class _SearchBarState extends State<SearchBar> {
         ),
       ),
     );
-    
+
     final Widget search = MyButton(
       minHeight: 32.0,
       minWidth: 44.0,
@@ -157,12 +161,12 @@ class _SearchBarState extends State<SearchBar> {
       radius: 4.0,
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       text: '搜索',
-      onPressed:() {
+      onPressed: () {
         _focus.unfocus();
         widget.onPressed?.call(_controller.text);
       },
     );
-    
+
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: isDark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,
       child: Material(

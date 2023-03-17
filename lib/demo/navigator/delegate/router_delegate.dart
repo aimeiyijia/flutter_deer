@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_deer/demo/navigator/book_entity.dart';
-import 'package:flutter_deer/demo/navigator/books_app_state.dart';
-import 'package:flutter_deer/demo/navigator/screen/app_shell.dart';
+import 'package:manager_app/demo/navigator/book_entity.dart';
+import 'package:manager_app/demo/navigator/books_app_state.dart';
+import 'package:manager_app/demo/navigator/screen/app_shell.dart';
 
 class BookRouterDelegate extends RouterDelegate<BookRoutePath>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<BookRoutePath> {
-
   BookRouterDelegate() : navigatorKey = GlobalKey<NavigatorState>() {
     appState.addListener(notifyListeners);
   }

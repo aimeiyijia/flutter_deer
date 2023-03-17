@@ -1,14 +1,14 @@
 import 'package:flutter/widgets.dart';
 
-/// @weilu https://github.com/simplezhli/flutter_deer
-/// 
+/// @weilu https://github.com/simplezhli/manager_app
+///
 /// 便于管理ChangeNotifier，不用重复写模板代码。
 /// 之前：
 /// ```dart
 /// class TestPageState extends State<TestPage> {
 ///   final TextEditingController _controller = TextEditingController();
 ///   final FocusNode _nodeText = FocusNode();
-///   
+///
 ///   @override
 ///   void initState() {
 ///     _controller.addListener(callback);
@@ -40,18 +40,17 @@ import 'package:flutter/widgets.dart';
 /// }
 /// ```
 mixin ChangeNotifierMixin<T extends StatefulWidget> on State<T> {
-
   Map<ChangeNotifier?, List<VoidCallback>?>? _map;
 
   Map<ChangeNotifier?, List<VoidCallback>?>? changeNotifier();
-  
+
   @override
   void initState() {
     _map = changeNotifier();
-    /// 遍历数据，如果callbacks不为空则添加监听
-    _map?.forEach((changeNotifier, callbacks) { 
-      if (callbacks != null && callbacks.isNotEmpty) {
 
+    /// 遍历数据，如果callbacks不为空则添加监听
+    _map?.forEach((changeNotifier, callbacks) {
+      if (callbacks != null && callbacks.isNotEmpty) {
         void addListener(VoidCallback callback) {
           changeNotifier?.addListener(callback);
         }

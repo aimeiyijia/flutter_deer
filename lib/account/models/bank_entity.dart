@@ -1,22 +1,22 @@
 import 'package:azlistview/azlistview.dart';
-import 'package:flutter_deer/generated/json/bank_entity.g.dart';
-import 'package:flutter_deer/generated/json/base/json_field.dart';
+import 'package:manager_app/generated/json/bank_entity.g.dart';
+import 'package:manager_app/generated/json/base/json_field.dart';
 
 @JsonSerializable()
 class BankEntity with ISuspensionBean {
+  BankEntity({this.id, this.bankName, this.firstLetter});
 
-	BankEntity({this.id, this.bankName, this.firstLetter});
+  factory BankEntity.fromJson(Map<String, dynamic> json) =>
+      $BankEntityFromJson(json);
 
-	factory BankEntity.fromJson(Map<String, dynamic> json) => $BankEntityFromJson(json);
+  Map<String, dynamic> toJson() => $BankEntityToJson(this);
 
-	Map<String, dynamic> toJson() => $BankEntityToJson(this);
+  int? id;
+  String? bankName;
+  String? firstLetter;
 
-	int? id;
-	String? bankName;
-	String? firstLetter;
-
-	@override
+  @override
   String getSuspensionTag() {
-		return firstLetter ?? '';
+    return firstLetter ?? '';
   }
 }

@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_deer/login/widgets/my_text_field.dart';
-import 'package:flutter_deer/res/resources.dart';
-import 'package:flutter_deer/routers/fluro_navigator.dart';
-import 'package:flutter_deer/util/change_notifier_manage.dart';
-import 'package:flutter_deer/util/other_utils.dart';
-import 'package:flutter_deer/util/toast_utils.dart';
-import 'package:flutter_deer/widgets/my_app_bar.dart';
-import 'package:flutter_deer/widgets/my_button.dart';
-import 'package:flutter_deer/widgets/my_scroll_view.dart';
-
+import 'package:manager_app/login/widgets/my_text_field.dart';
+import 'package:manager_app/res/resources.dart';
+import 'package:manager_app/routers/fluro_navigator.dart';
+import 'package:manager_app/util/change_notifier_manage.dart';
+import 'package:manager_app/util/other_utils.dart';
+import 'package:manager_app/util/toast_utils.dart';
+import 'package:manager_app/widgets/my_app_bar.dart';
+import 'package:manager_app/widgets/my_button.dart';
+import 'package:manager_app/widgets/my_scroll_view.dart';
 
 /// design/1注册登录/index.html#artboard13
 class UpdatePasswordPage extends StatefulWidget {
-
   const UpdatePasswordPage({super.key});
 
   @override
   _UpdatePasswordPageState createState() => _UpdatePasswordPageState();
 }
 
-class _UpdatePasswordPageState extends State<UpdatePasswordPage> with ChangeNotifierMixin<UpdatePasswordPage> {
+class _UpdatePasswordPageState extends State<UpdatePasswordPage>
+    with ChangeNotifierMixin<UpdatePasswordPage> {
   //定义一个controller
   final TextEditingController _oldPwdController = TextEditingController();
   final TextEditingController _newPwdController = TextEditingController();
@@ -37,7 +36,7 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> with ChangeNoti
       _nodeText2: null,
     };
   }
-  
+
   void _verify() {
     final String oldPwd = _oldPwdController.text;
     final String newPwd = _newPwdController.text;
@@ -54,12 +53,12 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> with ChangeNoti
       });
     }
   }
-  
+
   void _confirm() {
     Toast.show('修改成功！');
     NavigatorUtils.goBack(context);
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,7 +66,8 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> with ChangeNoti
         title: '修改密码',
       ),
       body: MyScrollView(
-        keyboardConfig: Utils.getKeyboardActionsConfig(context, <FocusNode>[_nodeText1, _nodeText2]),
+        keyboardConfig: Utils.getKeyboardActionsConfig(
+            context, <FocusNode>[_nodeText1, _nodeText2]),
         crossAxisAlignment: CrossAxisAlignment.center,
         padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 20.0),
         children: <Widget>[
@@ -78,7 +78,10 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> with ChangeNoti
           Gaps.vGap8,
           Text(
             '设置账号 15000000000',
-            style: Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: Dimens.font_sp12),
+            style: Theme.of(context)
+                .textTheme
+                .subtitle2
+                ?.copyWith(fontSize: Dimens.font_sp12),
           ),
           Gaps.vGap32,
           MyTextField(

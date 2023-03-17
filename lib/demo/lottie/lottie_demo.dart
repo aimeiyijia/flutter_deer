@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_deer/demo/lottie/bunny.dart';
+import 'package:manager_app/demo/lottie/bunny.dart';
 import 'package:lottie/lottie.dart';
 
 /// Android版实现：https://github.com/omarsahl/Flopsy
 /// 感谢Flopsy项目提供的思路及素材
 class LottieDemo extends StatefulWidget {
-
-  const LottieDemo({super.key,});
+  const LottieDemo({
+    super.key,
+  });
 
   @override
   _LottieDemoState createState() => _LottieDemoState();
@@ -18,7 +19,6 @@ const Color _backgroundColor = Color(0xFF37474F);
 const Color _textColor = Color(0xFFCCCCCC);
 
 class _LottieDemoState extends State<LottieDemo> with TickerProviderStateMixin {
-
   late AnimationController _controller;
   late Bunny _bunny;
 
@@ -45,7 +45,10 @@ class _LottieDemoState extends State<LottieDemo> with TickerProviderStateMixin {
       appBar: AppBar(
         systemOverlayStyle: SystemUiOverlayStyle.light,
         backgroundColor: _backgroundColor,
-        title: const Text('Lottie Demo', style: TextStyle(color: _textColor),),
+        title: const Text(
+          'Lottie Demo',
+          style: TextStyle(color: _textColor),
+        ),
         iconTheme: const IconThemeData(color: _textColor),
       ),
       backgroundColor: _backgroundColor,
@@ -109,10 +112,12 @@ class _LottieDemoState extends State<LottieDemo> with TickerProviderStateMixin {
         primaryColor: _primaryColor,
         textSelectionTheme: TextSelectionThemeData(
           selectionColor: _primaryColor.withAlpha(70),
-          selectionHandleColor: _primaryColor,  // 覆盖`selectionHandleColor`不起作用 https://github.com/flutter/flutter/issues/74890
+          selectionHandleColor:
+              _primaryColor, // 覆盖`selectionHandleColor`不起作用 https://github.com/flutter/flutter/issues/74890
           cursorColor: _primaryColor,
         ),
-        colorScheme: ColorScheme.fromSwatch().copyWith(secondary: _primaryColor),
+        colorScheme:
+            ColorScheme.fromSwatch().copyWith(secondary: _primaryColor),
       ),
       child: content,
     );
@@ -121,33 +126,37 @@ class _LottieDemoState extends State<LottieDemo> with TickerProviderStateMixin {
   /// 获取文字宽度
   double _getTextSize(String text) {
     final TextPainter textPainter = TextPainter(
-      text: TextSpan(text: text, style: const TextStyle(fontSize: 16.0,)),
+      text: TextSpan(
+          text: text,
+          style: const TextStyle(
+            fontSize: 16.0,
+          )),
       maxLines: 1,
       textDirection: TextDirection.ltr,
-    )
-      ..layout();
+    )..layout();
     return textPainter.size.width;
   }
 }
 
 class _MyTextField extends StatefulWidget {
-
-  const _MyTextField({
-    required this.labelText,
-    this.obscureText = false,
-    this.keyboardType,
-    this.onHasFocus,
-    this.onObscureText,
-    this.onChanged
-  });
+  const _MyTextField(
+      {required this.labelText,
+      this.obscureText = false,
+      this.keyboardType,
+      this.onHasFocus,
+      this.onObscureText,
+      this.onChanged});
 
   final String labelText;
   final bool obscureText;
   final TextInputType? keyboardType;
+
   /// 获取焦点监听
   final Function(bool isObscure)? onHasFocus;
+
   /// 密码可见监听
   final Function(bool isObscure)? onObscureText;
+
   /// 文字输入监听
   final Function(String text)? onChanged;
 
@@ -156,7 +165,6 @@ class _MyTextField extends StatefulWidget {
 }
 
 class _MyTextFieldState extends State<_MyTextField> {
-
   bool _isObscure = true;
   final FocusNode _focusNode = FocusNode();
 
@@ -170,9 +178,7 @@ class _MyTextFieldState extends State<_MyTextField> {
     if (_focusNode.hasFocus && widget.onHasFocus != null) {
       widget.onHasFocus?.call(_isObscure);
     }
-    setState(() {
-
-    });
+    setState(() {});
   }
 
   @override
@@ -211,20 +217,22 @@ class _MyTextFieldState extends State<_MyTextField> {
                 color: _primaryColor,
               ),
             ),
-            suffixIcon: widget.obscureText ? IconButton(
-              icon: Icon(
-                _isObscure ? Icons.visibility_off : Icons.visibility,
-                color: _focusNode.hasFocus ? _primaryColor : _textColor,
-              ),
-              onPressed: () {
-                setState(() {
-                  _isObscure = !_isObscure;
-                });
-                if (widget.onObscureText != null) {
-                  widget.onObscureText?.call(_isObscure);
-                }
-              },
-            ) : null,
+            suffixIcon: widget.obscureText
+                ? IconButton(
+                    icon: Icon(
+                      _isObscure ? Icons.visibility_off : Icons.visibility,
+                      color: _focusNode.hasFocus ? _primaryColor : _textColor,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _isObscure = !_isObscure;
+                      });
+                      if (widget.onObscureText != null) {
+                        widget.onObscureText?.call(_isObscure);
+                      }
+                    },
+                  )
+                : null,
           ),
           keyboardType: widget.keyboardType,
           obscureText: widget.obscureText ? _isObscure : widget.obscureText,

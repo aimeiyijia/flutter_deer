@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_deer/account/account_router.dart';
-import 'package:flutter_deer/account/models/bank_entity.dart';
-import 'package:flutter_deer/account/models/city_entity.dart';
-import 'package:flutter_deer/res/resources.dart';
-import 'package:flutter_deer/routers/fluro_navigator.dart';
-import 'package:flutter_deer/util/other_utils.dart';
-import 'package:flutter_deer/util/theme_utils.dart';
-import 'package:flutter_deer/widgets/my_app_bar.dart';
-import 'package:flutter_deer/widgets/my_button.dart';
-import 'package:flutter_deer/widgets/my_scroll_view.dart';
-import 'package:flutter_deer/widgets/selected_item.dart';
-import 'package:flutter_deer/widgets/text_field_item.dart';
-
+import 'package:manager_app/account/account_router.dart';
+import 'package:manager_app/account/models/bank_entity.dart';
+import 'package:manager_app/account/models/city_entity.dart';
+import 'package:manager_app/res/resources.dart';
+import 'package:manager_app/routers/fluro_navigator.dart';
+import 'package:manager_app/util/other_utils.dart';
+import 'package:manager_app/util/theme_utils.dart';
+import 'package:manager_app/widgets/my_app_bar.dart';
+import 'package:manager_app/widgets/my_button.dart';
+import 'package:manager_app/widgets/my_scroll_view.dart';
+import 'package:manager_app/widgets/selected_item.dart';
+import 'package:manager_app/widgets/text_field_item.dart';
 
 /// design/6店铺-账户/index.html#artboard29
 class AddWithdrawalAccountPage extends StatefulWidget {
-
   const AddWithdrawalAccountPage({super.key});
 
   @override
-  _AddWithdrawalAccountPageState createState() => _AddWithdrawalAccountPageState();
+  _AddWithdrawalAccountPageState createState() =>
+      _AddWithdrawalAccountPageState();
 }
 
 class _AddWithdrawalAccountPageState extends State<AddWithdrawalAccountPage> {
@@ -28,10 +27,13 @@ class _AddWithdrawalAccountPageState extends State<AddWithdrawalAccountPage> {
   String _city = '';
   String _bank = '';
   String _bank1 = '';
-  
+
   @override
   Widget build(BuildContext context) {
-    final TextStyle? style = Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: Dimens.font_sp14);
+    final TextStyle? style = Theme.of(context)
+        .textTheme
+        .subtitle2
+        ?.copyWith(fontSize: Dimens.font_sp14);
     final List<Widget> children = <Widget>[
       Gaps.vGap5,
       SelectedItem(
@@ -40,7 +42,9 @@ class _AddWithdrawalAccountPageState extends State<AddWithdrawalAccountPage> {
         onTap: () => _showSelectAccountTypeDialog(),
       ),
       Visibility(
-        maintainState: true, /// 是为了保留填写信息，其实就是Offstage，这里只是展示另一种方法。
+        maintainState: true,
+
+        /// 是为了保留填写信息，其实就是Offstage，这里只是展示另一种方法。
         visible: !_isWechat,
         child: Column(
           children: <Widget>[
@@ -58,7 +62,8 @@ class _AddWithdrawalAccountPageState extends State<AddWithdrawalAccountPage> {
               content: _city.isEmpty ? '选择开户城市' : _city,
               style: _city.isEmpty ? style : null,
               onTap: () {
-                NavigatorUtils.pushResult(context, AccountRouter.citySelectPage, (Object result) {
+                NavigatorUtils.pushResult(context, AccountRouter.citySelectPage,
+                    (Object result) {
                   setState(() {
                     final CityEntity model = result as CityEntity;
                     _city = model.name;
@@ -71,7 +76,9 @@ class _AddWithdrawalAccountPageState extends State<AddWithdrawalAccountPage> {
               content: _bank.isEmpty ? '选择开户银行' : _bank,
               style: _bank.isEmpty ? style : null,
               onTap: () {
-                NavigatorUtils.pushResult(context, '${AccountRouter.bankSelectPage}?type=0', (Object result) {
+                NavigatorUtils.pushResult(
+                    context, '${AccountRouter.bankSelectPage}?type=0',
+                    (Object result) {
                   setState(() {
                     final BankEntity model = result as BankEntity;
                     _bank = model.bankName.nullSafe;
@@ -84,7 +91,9 @@ class _AddWithdrawalAccountPageState extends State<AddWithdrawalAccountPage> {
               content: _bank1.isEmpty ? '选择开户支行' : _bank1,
               style: _bank1.isEmpty ? style : null,
               onTap: () {
-                NavigatorUtils.pushResult(context, '${AccountRouter.bankSelectPage}?type=1', (Object result) {
+                NavigatorUtils.pushResult(
+                    context, '${AccountRouter.bankSelectPage}?type=1',
+                    (Object result) {
                   setState(() {
                     final BankEntity model = result as BankEntity;
                     _bank1 = model.bankName.nullSafe;
@@ -110,15 +119,15 @@ class _AddWithdrawalAccountPageState extends State<AddWithdrawalAccountPage> {
         title: '添加账号',
       ),
       body: MyScrollView(
-        bottomButton: Padding(
-          padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 8.0),
-          child: MyButton(
-            onPressed: () => NavigatorUtils.goBackWithParams(context, 'add'),
-            text: '确定',
+          bottomButton: Padding(
+            padding:
+                const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 8.0),
+            child: MyButton(
+              onPressed: () => NavigatorUtils.goBackWithParams(context, 'add'),
+              text: '确定',
+            ),
           ),
-        ),
-        children: children
-      ),
+          children: children),
     );
   }
 
@@ -208,6 +217,6 @@ class _AddWithdrawalAccountPageState extends State<AddWithdrawalAccountPage> {
           ),
         );
       },
-    );        
+    );
   }
 }

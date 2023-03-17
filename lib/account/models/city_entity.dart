@@ -1,22 +1,22 @@
 import 'package:azlistview/azlistview.dart';
-import 'package:flutter_deer/generated/json/base/json_field.dart';
-import 'package:flutter_deer/generated/json/city_entity.g.dart';
+import 'package:manager_app/generated/json/base/json_field.dart';
+import 'package:manager_app/generated/json/city_entity.g.dart';
 
 @JsonSerializable()
 class CityEntity with ISuspensionBean {
+  CityEntity();
 
-	CityEntity();
+  factory CityEntity.fromJson(Map<String, dynamic> json) =>
+      $CityEntityFromJson(json);
 
-	factory CityEntity.fromJson(Map<String, dynamic> json) => $CityEntityFromJson(json);
+  Map<String, dynamic> toJson() => $CityEntityToJson(this);
 
-	Map<String, dynamic> toJson() => $CityEntityToJson(this);
+  late String name;
+  late String cityCode;
+  late String firstCharacter;
 
-	late String name;
-	late String cityCode;
-	late String firstCharacter;
-
-	@override
-	String getSuspensionTag() {
-		return firstCharacter;
-	}
+  @override
+  String getSuspensionTag() {
+    return firstCharacter;
+  }
 }

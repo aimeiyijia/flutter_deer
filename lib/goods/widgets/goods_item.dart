@@ -1,19 +1,17 @@
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_deer/goods/models/goods_item_entity.dart';
-import 'package:flutter_deer/res/resources.dart';
-import 'package:flutter_deer/util/device_utils.dart';
-import 'package:flutter_deer/util/other_utils.dart';
-import 'package:flutter_deer/util/theme_utils.dart';
-import 'package:flutter_deer/widgets/load_image.dart';
-import 'package:flutter_deer/widgets/my_button.dart';
+import 'package:manager_app/goods/models/goods_item_entity.dart';
+import 'package:manager_app/res/resources.dart';
+import 'package:manager_app/util/device_utils.dart';
+import 'package:manager_app/util/other_utils.dart';
+import 'package:manager_app/util/theme_utils.dart';
+import 'package:manager_app/widgets/load_image.dart';
+import 'package:manager_app/widgets/my_button.dart';
 
 import 'menu_reveal.dart';
 
-
 /// design/4商品/index.html#artboard1
 class GoodsItem extends StatelessWidget {
-  
   const GoodsItem({
     super.key,
     required this.item,
@@ -38,7 +36,7 @@ class GoodsItem extends StatelessWidget {
   final VoidCallback onTapMenuClose;
   final Animation<double> animation;
   final String heroTag;
-  
+
   @override
   Widget build(BuildContext context) {
     final Row child = Row(
@@ -116,7 +114,7 @@ class GoodsItem extends StatelessWidget {
         )
       ],
     );
-    
+
     return Stack(
       children: <Widget>[
         // item间的分隔线
@@ -138,19 +136,15 @@ class GoodsItem extends StatelessWidget {
       ],
     );
   }
-  
+
   Widget _buildGoodsMenu(BuildContext context) {
     return Positioned.fill(
       child: AnimatedBuilder(
-        animation: animation,
-        child: _buildGoodsMenuContent(context),
-        builder: (_, Widget? child) {
-          return MenuReveal(
-            revealPercent: animation.value,
-            child: child!
-          );
-        }
-      ),
+          animation: animation,
+          child: _buildGoodsMenuContent(context),
+          builder: (_, Widget? child) {
+            return MenuReveal(revealPercent: animation.value, child: child!);
+          }),
     );
   }
 
@@ -175,7 +169,8 @@ class GoodsItem extends StatelessWidget {
               minHeight: 56.0,
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
               textColor: isDark ? Colours.dark_button_text : Colors.white,
-              backgroundColor: isDark ? Colours.dark_app_main : Colours.app_main,
+              backgroundColor:
+                  isDark ? Colours.dark_app_main : Colours.app_main,
               onPressed: onTapEdit,
             ),
             MyButton(
@@ -211,7 +206,6 @@ class GoodsItem extends StatelessWidget {
 }
 
 class _GoodsItemTag extends StatelessWidget {
-  
   const _GoodsItemTag({
     required this.color,
     required this.text,
@@ -219,7 +213,7 @@ class _GoodsItemTag extends StatelessWidget {
 
   final Color? color;
   final String text;
-  
+
   @override
   Widget build(BuildContext context) {
     return Container(

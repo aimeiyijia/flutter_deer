@@ -2,20 +2,19 @@ import 'dart:math';
 
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_deer/res/resources.dart';
-import 'package:flutter_deer/statistics/widgets/selected_date.dart';
-import 'package:flutter_deer/util/date_utils.dart' as date;
-import 'package:flutter_deer/util/image_utils.dart';
-import 'package:flutter_deer/util/theme_utils.dart';
-import 'package:flutter_deer/widgets/bezier_chart/bezier_chart.dart';
-import 'package:flutter_deer/widgets/load_image.dart';
-import 'package:flutter_deer/widgets/my_app_bar.dart';
-import 'package:flutter_deer/widgets/my_card.dart';
+import 'package:manager_app/res/resources.dart';
+import 'package:manager_app/statistics/widgets/selected_date.dart';
+import 'package:manager_app/util/date_utils.dart' as date;
+import 'package:manager_app/util/image_utils.dart';
+import 'package:manager_app/util/theme_utils.dart';
+import 'package:manager_app/widgets/bezier_chart/bezier_chart.dart';
+import 'package:manager_app/widgets/load_image.dart';
+import 'package:manager_app/widgets/my_app_bar.dart';
+import 'package:manager_app/widgets/my_card.dart';
 
 /// design/5统计/index.html#artboard1
 /// design/5统计/index.html#artboard6
 class OrderStatisticsPage extends StatefulWidget {
-
   const OrderStatisticsPage(this.index, {super.key});
 
   final int index;
@@ -24,8 +23,8 @@ class OrderStatisticsPage extends StatefulWidget {
   _OrderStatisticsPageState createState() => _OrderStatisticsPageState();
 }
 
-class _OrderStatisticsPageState extends State<OrderStatisticsPage> with TickerProviderStateMixin {
-  
+class _OrderStatisticsPageState extends State<OrderStatisticsPage>
+    with TickerProviderStateMixin {
   int _selectedIndex = 2;
   late DateTime _initialDay;
   late Iterable<DateTime> _weeksDays;
@@ -39,7 +38,7 @@ class _OrderStatisticsPageState extends State<OrderStatisticsPage> with TickerPr
   final List<int> _monthList = [];
   bool _isExpanded = true;
   late Color _unSelectedTextColor;
-  
+
   static const List<String> _weeks = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
 
   @override
@@ -49,17 +48,22 @@ class _OrderStatisticsPageState extends State<OrderStatisticsPage> with TickerPr
     _selectedWeekDay = _initialDay.day;
     _selectedDay = _initialDay;
     _selectedMonth = _initialDay.month;
-    _weeksDays = date.DateUtils.daysInRange(date.DateUtils.previousWeek(_initialDay), date.DateUtils.nextDay(_initialDay)).toList().sublist(1, 8);
+    _weeksDays = date.DateUtils.daysInRange(
+            date.DateUtils.previousWeek(_initialDay),
+            date.DateUtils.nextDay(_initialDay))
+        .toList()
+        .sublist(1, 8);
     _currentMonthsDays = date.DateUtils.daysInMonth(_initialDay);
     _monthList.clear();
-    for (int i = 1; i < 13; i ++) {
+    for (int i = 1; i < 13; i++) {
       _monthList.add(i);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    _unSelectedTextColor = context.isDark ? Colors.white : Colours.dark_text_gray;
+    _unSelectedTextColor =
+        context.isDark ? Colors.white : Colours.dark_text_gray;
     return Scaffold(
       appBar: MyAppBar(
         centerTitle: widget.index == 1 ? '订单统计' : '交易额统计',
@@ -74,22 +78,29 @@ class _OrderStatisticsPageState extends State<OrderStatisticsPage> with TickerPr
               Row(
                 children: <Widget>[
                   Gaps.hGap16,
-                  _buildButton(_initialDay.year.toString(), const Key('year'), 0),
+                  _buildButton(
+                      _initialDay.year.toString(), const Key('year'), 0),
                   Gaps.hGap12,
                   Gaps.vLine,
                   Gaps.hGap12,
-                  _buildButton('${_initialDay.month.toString()}月', const Key('month'), 1),
+                  _buildButton('${_initialDay.month.toString()}月',
+                      const Key('month'), 1),
                   Gaps.hGap12,
                   Gaps.vLine,
                   Gaps.hGap12,
-                  _buildButton('${date.DateUtils.previousWeekToString(_initialDay)} -${date.DateUtils.apiDayFormat2(_initialDay)}', const Key('day'), 2),
+                  _buildButton(
+                      '${date.DateUtils.previousWeekToString(_initialDay)} -${date.DateUtils.apiDayFormat2(_initialDay)}',
+                      const Key('day'),
+                      2),
                 ],
               ),
               Gaps.vGap16,
               Flexible(
                 child: Container(
                   color: ThemeUtils.getStickyHeaderColor(context),
-                  padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: _selectedIndex != 1 ? 4.0 : 0.0),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                      vertical: _selectedIndex != 1 ? 4.0 : 0.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
@@ -107,42 +118,53 @@ class _OrderStatisticsPageState extends State<OrderStatisticsPage> with TickerPr
                         duration: const Duration(milliseconds: 300),
                         child: _buildCalendar(),
                       ),
-                      if (_selectedIndex == 1) InkWell(
-                        onTap: () {
-                          setState(() {
-                            _isExpanded = !_isExpanded;
-                          });
-                        },
-                        child: Semantics(
-                          label: _isExpanded ? '收起' : '展开',
-                          child: Container(
-                            height: 27.0,
-                            alignment: Alignment.topCenter,
-                            child: LoadAssetImage('statistic/${_isExpanded ? 'up' : 'down'}', width: 16.0, color: ThemeUtils.getIconColor(context),),
+                      if (_selectedIndex == 1)
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              _isExpanded = !_isExpanded;
+                            });
+                          },
+                          child: Semantics(
+                            label: _isExpanded ? '收起' : '展开',
+                            child: Container(
+                              height: 27.0,
+                              alignment: Alignment.topCenter,
+                              child: LoadAssetImage(
+                                'statistic/${_isExpanded ? 'up' : 'down'}',
+                                width: 16.0,
+                                color: ThemeUtils.getIconColor(context),
+                              ),
+                            ),
                           ),
-                        ),
-                      )
+                        )
                     ],
                   ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 32.0),
+                padding:
+                    const EdgeInsets.only(left: 16.0, right: 16.0, top: 32.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(widget.index == 1 ? '订单走势' : '交易额走势', style: TextStyles.textBold18),
+                    Text(widget.index == 1 ? '订单走势' : '交易额走势',
+                        style: TextStyles.textBold18),
                     Gaps.vGap16,
-                    _buildChart(Colours.app_main, Colours.shadow_blue, widget.index == 1 ? '全部订单' : '交易额(元)', '3000'),
-                    if (widget.index == 1) Column(
-                      children: <Widget>[
-                        Gaps.vGap16,
-                        _buildChart(const Color(0xFFFFAA33), const Color(0x80FFAA33), '完成订单', '2000'),
-                        Gaps.vGap16,
-                        _buildChart(Theme.of(context).errorColor, const Color(0x80FF4759), '取消订单', '1000'),
-                        Gaps.vGap16,
-                      ],
-                    )
+                    _buildChart(Colours.app_main, Colours.shadow_blue,
+                        widget.index == 1 ? '全部订单' : '交易额(元)', '3000'),
+                    if (widget.index == 1)
+                      Column(
+                        children: <Widget>[
+                          Gaps.vGap16,
+                          _buildChart(const Color(0xFFFFAA33),
+                              const Color(0x80FFAA33), '完成订单', '2000'),
+                          Gaps.vGap16,
+                          _buildChart(Theme.of(context).errorColor,
+                              const Color(0x80FF4759), '取消订单', '1000'),
+                          Gaps.vGap16,
+                        ],
+                      )
                   ],
                 ),
               ),
@@ -152,7 +174,7 @@ class _OrderStatisticsPageState extends State<OrderStatisticsPage> with TickerPr
       ),
     );
   }
-  
+
   Widget _buildButton(String text, Key key, int index) {
     return SelectedDateButton(
       text,
@@ -167,9 +189,9 @@ class _OrderStatisticsPageState extends State<OrderStatisticsPage> with TickerPr
       },
     );
   }
-  
-  Widget _buildChart(Color color, Color shadowColor, String title, String count) {
-    
+
+  Widget _buildChart(
+      Color color, Color shadowColor, String title, String count) {
     final Column body = Column(
       children: <Widget>[
         Gaps.vGap16,
@@ -205,7 +227,7 @@ class _OrderStatisticsPageState extends State<OrderStatisticsPage> with TickerPr
         ),
       ],
     );
-    
+
     return AspectRatio(
       aspectRatio: 3,
       child: MyCard(
@@ -233,13 +255,19 @@ class _OrderStatisticsPageState extends State<OrderStatisticsPage> with TickerPr
   List<DataPoint<dynamic>> _getRandomData() {
     if (data.isEmpty) {
       for (int i = 0; i < 7; i++) {
-        data.add(DataPoint<double>(value: Random.secure().nextInt(3000).toDouble(), xAxis: (i * 5).toDouble()));
+        data.add(DataPoint<double>(
+            value: Random.secure().nextInt(3000).toDouble(),
+            xAxis: (i * 5).toDouble()));
       }
       for (int i = 0; i < 7; i++) {
-        data1.add(DataPoint<double>(value: Random.secure().nextInt(3000).toDouble(), xAxis: (i * 5).toDouble()));
+        data1.add(DataPoint<double>(
+            value: Random.secure().nextInt(3000).toDouble(),
+            xAxis: (i * 5).toDouble()));
       }
       for (int i = 0; i < 7; i++) {
-        data2.add(DataPoint<double>(value: Random.secure().nextInt(3000).toDouble(), xAxis: (i * 5).toDouble()));
+        data2.add(DataPoint<double>(
+            value: Random.secure().nextInt(3000).toDouble(),
+            xAxis: (i * 5).toDouble()));
       }
     }
 
@@ -261,7 +289,7 @@ class _OrderStatisticsPageState extends State<OrderStatisticsPage> with TickerPr
     } else if (_selectedIndex == 2) {
       children = _builderWeekCalendar();
     }
-    
+
     return GridView.count(
       physics: const ClampingScrollPhysics(),
       shrinkWrap: true,
@@ -269,7 +297,7 @@ class _OrderStatisticsPageState extends State<OrderStatisticsPage> with TickerPr
       children: children,
     );
   }
-  
+
   List<Widget> _buildWeeks() {
     final List<Widget> widgets = [];
     void addWidget(String str) {
@@ -277,6 +305,7 @@ class _OrderStatisticsPageState extends State<OrderStatisticsPage> with TickerPr
         child: Text(str, style: Theme.of(context).textTheme.subtitle2),
       ));
     }
+
     _weeks.forEach(addWidget);
     return widgets;
   }
@@ -296,12 +325,16 @@ class _OrderStatisticsPageState extends State<OrderStatisticsPage> with TickerPr
         Center(
           child: SelectedDateButton(
             day.day.toString().padLeft(2, '0'), // 不足2位左边补0
-            selected: day.day == _selectedDay.day && !date.DateUtils.isExtraDay(day, _initialDay),
+            selected: day.day == _selectedDay.day &&
+                !date.DateUtils.isExtraDay(day, _initialDay),
             // 不是本月的日期与超过当前日期的不可点击
-            enable: day.day <= _initialDay.day && !date.DateUtils.isExtraDay(day, _initialDay),
+            enable: day.day <= _initialDay.day &&
+                !date.DateUtils.isExtraDay(day, _initialDay),
             unSelectedTextColor: _unSelectedTextColor,
+
             /// 日历中的具体日期添加完整语义
-            semanticsLabel: DateUtil.formatDate(day, format: DateFormats.zh_y_mo_d),
+            semanticsLabel:
+                DateUtil.formatDate(day, format: DateFormats.zh_y_mo_d),
             onTap: () {
               setState(() {
                 _selectedDay = day;
@@ -335,10 +368,11 @@ class _OrderStatisticsPageState extends State<OrderStatisticsPage> with TickerPr
         ),
       );
     }
+
     _monthList.forEach(addButton);
     return monthWidgets;
   }
-  
+
   List<Widget> _builderWeekCalendar() {
     final List<Widget> dayWidgets = [];
 
@@ -349,7 +383,8 @@ class _OrderStatisticsPageState extends State<OrderStatisticsPage> with TickerPr
             day.day.toString().padLeft(2, '0'),
             selected: day.day == _selectedWeekDay,
             unSelectedTextColor: _unSelectedTextColor,
-            semanticsLabel: DateUtil.formatDate(day, format: DateFormats.zh_y_mo_d),
+            semanticsLabel:
+                DateUtil.formatDate(day, format: DateFormats.zh_y_mo_d),
             onTap: () {
               setState(() {
                 _selectedWeekDay = day.day;
@@ -359,8 +394,8 @@ class _OrderStatisticsPageState extends State<OrderStatisticsPage> with TickerPr
         ),
       );
     }
+
     _weeksDays.forEach(addButton);
     return dayWidgets;
   }
-
 }

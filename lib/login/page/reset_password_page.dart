@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_deer/login/widgets/my_text_field.dart';
-import 'package:flutter_deer/res/resources.dart';
-import 'package:flutter_deer/util/change_notifier_manage.dart';
-import 'package:flutter_deer/util/other_utils.dart';
-import 'package:flutter_deer/util/toast_utils.dart';
-import 'package:flutter_deer/widgets/my_app_bar.dart';
-import 'package:flutter_deer/widgets/my_button.dart';
-import 'package:flutter_deer/widgets/my_scroll_view.dart';
+import 'package:manager_app/login/widgets/my_text_field.dart';
+import 'package:manager_app/res/resources.dart';
+import 'package:manager_app/util/change_notifier_manage.dart';
+import 'package:manager_app/util/other_utils.dart';
+import 'package:manager_app/util/toast_utils.dart';
+import 'package:manager_app/widgets/my_app_bar.dart';
+import 'package:manager_app/widgets/my_button.dart';
+import 'package:manager_app/widgets/my_scroll_view.dart';
 import 'package:flutter_gen/gen_l10n/deer_localizations.dart';
-
 
 /// design/1注册登录/index.html#artboard9
 class ResetPasswordPage extends StatefulWidget {
-
   const ResetPasswordPage({super.key});
 
   @override
   _ResetPasswordPageState createState() => _ResetPasswordPageState();
 }
 
-class _ResetPasswordPageState extends State<ResetPasswordPage> with ChangeNotifierMixin<ResetPasswordPage> {
+class _ResetPasswordPageState extends State<ResetPasswordPage>
+    with ChangeNotifierMixin<ResetPasswordPage> {
   //定义一个controller
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _vCodeController = TextEditingController();
@@ -62,7 +61,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> with ChangeNotifi
       });
     }
   }
-  
+
   void _reset() {
     Toast.show(DeerLocalizations.of(context)!.confirm);
   }
@@ -74,7 +73,8 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> with ChangeNotifi
         title: DeerLocalizations.of(context)!.forgotPasswordLink,
       ),
       body: MyScrollView(
-        keyboardConfig: Utils.getKeyboardActionsConfig(context, <FocusNode>[_nodeText1, _nodeText2, _nodeText3]),
+        keyboardConfig: Utils.getKeyboardActionsConfig(
+            context, <FocusNode>[_nodeText1, _nodeText2, _nodeText3]),
         crossAxisAlignment: CrossAxisAlignment.center,
         padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 20.0),
         children: _buildBody(),

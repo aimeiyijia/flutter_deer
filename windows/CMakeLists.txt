@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.15)
-project(flutter_deer LANGUAGES CXX)
+project(manager_app LANGUAGES CXX)
 
-set(BINARY_NAME "flutter_deer")
+set(BINARY_NAME "manager_app")
 
 cmake_policy(SET CMP0063 NEW)
 

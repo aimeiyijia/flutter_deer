@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_deer/res/resources.dart';
-import 'package:flutter_deer/routers/fluro_navigator.dart';
-import 'package:flutter_deer/widgets/load_image.dart';
-import 'package:flutter_deer/widgets/my_app_bar.dart';
-import 'package:flutter_deer/widgets/my_button.dart';
+import 'package:manager_app/res/resources.dart';
+import 'package:manager_app/routers/fluro_navigator.dart';
+import 'package:manager_app/widgets/load_image.dart';
+import 'package:manager_app/widgets/my_app_bar.dart';
+import 'package:manager_app/widgets/my_button.dart';
 
 /// design/6店铺-账户/index.html#artboard5
 class WithdrawalResultPage extends StatefulWidget {
-
   const WithdrawalResultPage({super.key});
 
   @override
@@ -26,7 +25,8 @@ class _WithdrawalResultPageState extends State<WithdrawalResultPage> {
         child: Column(
           children: <Widget>[
             Gaps.vGap50,
-            const LoadAssetImage('account/sqsb',
+            const LoadAssetImage(
+              'account/sqsb',
               width: 80.0,
               height: 80.0,
             ),

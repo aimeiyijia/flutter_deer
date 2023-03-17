@@ -1,9 +1,8 @@
-name: flutter_deer
-description: Flutter Deer
+name: manager_app
+description: 管理人App
 
 version: 1.2.2+20
-# 唯鹿 <a05111993@163.com>
-homepage: https://weilu.blog.csdn.net/
+homepage: ''
 
 publish_to: 'none'
 
@@ -78,7 +77,7 @@ dependencies:
   # 动画效果 https://github.com/xvrh/lottie-flutter
   lottie: ^1.4.1
 
-# https://github.com/simplezhli/flutter_deer/issues/187
+# https://github.com/simplezhli/manager_app/issues/187
 dependency_overrides:
   scrollable_positioned_list: ^0.3.2
 

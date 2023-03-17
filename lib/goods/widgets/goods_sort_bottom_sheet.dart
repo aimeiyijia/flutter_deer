@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_deer/goods/provider/goods_sort_provider.dart';
-import 'package:flutter_deer/res/resources.dart';
-import 'package:flutter_deer/routers/fluro_navigator.dart';
-import 'package:flutter_deer/util/other_utils.dart';
-import 'package:flutter_deer/util/screen_utils.dart';
-import 'package:flutter_deer/util/theme_utils.dart';
-import 'package:flutter_deer/widgets/load_image.dart';
+import 'package:manager_app/goods/provider/goods_sort_provider.dart';
+import 'package:manager_app/res/resources.dart';
+import 'package:manager_app/routers/fluro_navigator.dart';
+import 'package:manager_app/util/other_utils.dart';
+import 'package:manager_app/util/screen_utils.dart';
+import 'package:manager_app/util/theme_utils.dart';
+import 'package:manager_app/widgets/load_image.dart';
 import 'package:provider/provider.dart';
-
 
 /// design/4商品/index.html#artboard20
 class GoodsSortBottomSheet extends StatefulWidget {
-
   const GoodsSortBottomSheet({
     super.key,
     required this.provider,
@@ -19,18 +17,19 @@ class GoodsSortBottomSheet extends StatefulWidget {
   });
 
   final Function(String, String) onSelected;
+
   /// 临时状态
   final GoodsSortProvider provider;
-  
+
   @override
   GoodsSortBottomSheetState createState() => GoodsSortBottomSheetState();
 }
 
-class GoodsSortBottomSheetState extends State<GoodsSortBottomSheet> with SingleTickerProviderStateMixin {
-  
+class GoodsSortBottomSheetState extends State<GoodsSortBottomSheet>
+    with SingleTickerProviderStateMixin {
   TabController? _tabController;
   final ScrollController _controller = ScrollController();
-  
+
   @override
   void initState() {
     super.initState();
@@ -47,12 +46,13 @@ class GoodsSortBottomSheetState extends State<GoodsSortBottomSheet> with SingleT
     _controller.dispose();
     super.dispose();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Material(
       child: SizedBox(
         height: context.height * 11.0 / 16.0,
+
         /// 为保留状态，选择ChangeNotifierProvider.value，销毁自己手动处理（见 goods_edit_page.dart ：dispose()）
         child: ChangeNotifierProvider<GoodsSortProvider>.value(
           value: widget.provider,
@@ -84,7 +84,8 @@ class GoodsSortBottomSheetState extends State<GoodsSortBottomSheet> with SingleT
                         );
                       },
                       indicatorSize: TabBarIndicatorSize.label,
-                      unselectedLabelColor: context.isDark ? Colours.text_gray : Colours.text,
+                      unselectedLabelColor:
+                          context.isDark ? Colours.text_gray : Colours.text,
                       labelColor: Theme.of(context).primaryColor,
                       tabs: provider.myTabs,
                     ),
@@ -136,7 +137,8 @@ class GoodsSortBottomSheetState extends State<GoodsSortBottomSheet> with SingleT
   }
 
   Widget _buildItem(GoodsSortProvider provider, int index) {
-    final bool flag = provider.mList[index].name == provider.myTabs[provider.index].text;
+    final bool flag =
+        provider.mList[index].name == provider.myTabs[provider.index].text;
     return InkWell(
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -145,14 +147,18 @@ class GoodsSortBottomSheetState extends State<GoodsSortBottomSheet> with SingleT
           children: <Widget>[
             Text(
               provider.mList[index].name,
-              style: flag ? TextStyle(
-                fontSize: Dimens.font_sp14,
-                color: Theme.of(context).primaryColor,
-              ) : null,),
+              style: flag
+                  ? TextStyle(
+                      fontSize: Dimens.font_sp14,
+                      color: Theme.of(context).primaryColor,
+                    )
+                  : null,
+            ),
             Gaps.hGap8,
             Visibility(
               visible: flag,
-              child: const LoadAssetImage('goods/xz', height: 16.0, width: 16.0),
+              child:
+                  const LoadAssetImage('goods/xz', height: 16.0, width: 16.0),
             )
           ],
         ),
@@ -165,10 +171,12 @@ class GoodsSortBottomSheetState extends State<GoodsSortBottomSheet> with SingleT
         provider.setListAndChangeTab();
         if (provider.index > 2) {
           provider.setIndex(2);
-          widget.onSelected(provider.mList[index].id, provider.mList[index].name);
+          widget.onSelected(
+              provider.mList[index].id, provider.mList[index].name);
           NavigatorUtils.goBack(context);
         }
-        _controller.animateTo(0.0, duration: const Duration(milliseconds: 100), curve: Curves.ease);
+        _controller.animateTo(0.0,
+            duration: const Duration(milliseconds: 100), curve: Curves.ease);
         _tabController?.animateTo(provider.index);
       },
     );

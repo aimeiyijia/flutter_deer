@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_deer/res/resources.dart';
-import 'package:flutter_deer/util/input_formatter/number_text_input_formatter.dart';
+import 'package:manager_app/res/resources.dart';
+import 'package:manager_app/util/input_formatter/number_text_input_formatter.dart';
 
 /// 封装输入框
 class TextFieldItem extends StatelessWidget {
-
   const TextFieldItem({
     super.key,
     this.controller,
@@ -47,7 +46,7 @@ class TextFieldItem extends StatelessWidget {
         Gaps.hGap16
       ],
     );
-    
+
     return Container(
       height: 50.0,
       margin: const EdgeInsets.only(left: 16.0),
@@ -65,7 +64,8 @@ class TextFieldItem extends StatelessWidget {
     if (keyboardType == const TextInputType.numberWithOptions(decimal: true)) {
       return <TextInputFormatter>[UsNumberTextInputFormatter()];
     }
-    if (keyboardType == TextInputType.number || keyboardType == TextInputType.phone) {
+    if (keyboardType == TextInputType.number ||
+        keyboardType == TextInputType.phone) {
       return <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly];
     }
     return null;

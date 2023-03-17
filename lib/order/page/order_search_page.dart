@@ -1,43 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_deer/mvp/base_page.dart';
-import 'package:flutter_deer/mvp/power_presenter.dart';
-import 'package:flutter_deer/order/iview/order_search_iview.dart';
-import 'package:flutter_deer/order/models/search_entity.dart';
-import 'package:flutter_deer/order/presenter/order_search_presenter.dart';
-import 'package:flutter_deer/order/provider/base_list_provider.dart';
-import 'package:flutter_deer/shop/iview/shop_iview.dart';
-import 'package:flutter_deer/shop/models/user_entity.dart';
-import 'package:flutter_deer/shop/presenter/shop_presenter.dart';
-import 'package:flutter_deer/util/other_utils.dart';
-import 'package:flutter_deer/widgets/my_refresh_list.dart';
-import 'package:flutter_deer/widgets/search_bar.dart';
-import 'package:flutter_deer/widgets/state_layout.dart';
+import 'package:manager_app/mvp/base_page.dart';
+import 'package:manager_app/mvp/power_presenter.dart';
+import 'package:manager_app/order/iview/order_search_iview.dart';
+import 'package:manager_app/order/models/search_entity.dart';
+import 'package:manager_app/order/presenter/order_search_presenter.dart';
+import 'package:manager_app/order/provider/base_list_provider.dart';
+import 'package:manager_app/shop/iview/shop_iview.dart';
+import 'package:manager_app/shop/models/user_entity.dart';
+import 'package:manager_app/shop/presenter/shop_presenter.dart';
+import 'package:manager_app/util/other_utils.dart';
+import 'package:manager_app/widgets/my_refresh_list.dart';
+import 'package:manager_app/widgets/search_bar.dart';
+import 'package:manager_app/widgets/state_layout.dart';
 import 'package:provider/provider.dart';
 
 /// design/3订单/index.html#artboard8
 class OrderSearchPage extends StatefulWidget {
-
   const OrderSearchPage({super.key});
 
   @override
   _OrderSearchPageState createState() => _OrderSearchPageState();
 }
 
-class _OrderSearchPageState extends State<OrderSearchPage> with BasePageMixin<OrderSearchPage, PowerPresenter<dynamic>> implements OrderSearchIMvpView, ShopIMvpView {
-
+class _OrderSearchPageState extends State<OrderSearchPage>
+    with BasePageMixin<OrderSearchPage, PowerPresenter<dynamic>>
+    implements OrderSearchIMvpView, ShopIMvpView {
   @override
   BaseListProvider<SearchItems> provider = BaseListProvider<SearchItems>();
-  
+
   late String _keyword;
   int _page = 1;
-  
+
   @override
   void initState() {
     /// 默认为加载中状态，本页面场景默认为空
     provider.stateType = StateType.empty;
     super.initState();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<BaseListProvider<SearchItems>>(
@@ -56,26 +56,25 @@ class _OrderSearchPageState extends State<OrderSearchPage> with BasePageMixin<Or
             _orderSearchPresenter.search(_keyword, _page, true);
           },
         ),
-        body: Consumer<BaseListProvider<SearchItems>>(
-          builder: (_, provider, __) {
-            return DeerListView(
-              key: const Key('order_search_list'),
-              itemCount: provider.list.length,
-              stateType: provider.stateType,
-              onRefresh: _onRefresh,
-              loadMore: _loadMore,
-              itemExtent: 50.0,
-              hasMore: provider.hasMore,
-              itemBuilder: (_, index) {
-                return Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  alignment: Alignment.centerLeft,
-                  child: Text(provider.list[index].name.nullSafe),
-                );
-              },
-            );
-          }
-        ),
+        body:
+            Consumer<BaseListProvider<SearchItems>>(builder: (_, provider, __) {
+          return DeerListView(
+            key: const Key('order_search_list'),
+            itemCount: provider.list.length,
+            stateType: provider.stateType,
+            onRefresh: _onRefresh,
+            loadMore: _loadMore,
+            itemExtent: 50.0,
+            hasMore: provider.hasMore,
+            itemBuilder: (_, index) {
+              return Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                alignment: Alignment.centerLeft,
+                child: Text(provider.list[index].name.nullSafe),
+              );
+            },
+          );
+        }),
       ),
     );
   }
@@ -95,10 +94,12 @@ class _OrderSearchPageState extends State<OrderSearchPage> with BasePageMixin<Or
 
   @override
   PowerPresenter<dynamic> createPresenter() {
-    final PowerPresenter<dynamic> powerPresenter = PowerPresenter<dynamic>(this);
+    final PowerPresenter<dynamic> powerPresenter =
+        PowerPresenter<dynamic>(this);
     _orderSearchPresenter = OrderSearchPresenter();
     _shopPagePresenter = ShopPagePresenter();
-    powerPresenter.requestPresenter([_orderSearchPresenter, _shopPagePresenter]);
+    powerPresenter
+        .requestPresenter([_orderSearchPresenter, _shopPagePresenter]);
     return powerPresenter;
   }
 
@@ -109,5 +110,4 @@ class _OrderSearchPageState extends State<OrderSearchPage> with BasePageMixin<Or
   void setUser(UserEntity? user) {
     showToast(user?.name ?? '');
   }
-
 }

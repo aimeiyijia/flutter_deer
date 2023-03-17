@@ -1,12 +1,12 @@
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_deer/order/widgets/pay_type_dialog.dart';
-import 'package:flutter_deer/res/resources.dart';
-import 'package:flutter_deer/routers/fluro_navigator.dart';
-import 'package:flutter_deer/util/other_utils.dart';
-import 'package:flutter_deer/util/theme_utils.dart';
-import 'package:flutter_deer/util/toast_utils.dart';
-import 'package:flutter_deer/widgets/my_card.dart';
+import 'package:manager_app/order/widgets/pay_type_dialog.dart';
+import 'package:manager_app/res/resources.dart';
+import 'package:manager_app/routers/fluro_navigator.dart';
+import 'package:manager_app/util/other_utils.dart';
+import 'package:manager_app/util/theme_utils.dart';
+import 'package:manager_app/util/toast_utils.dart';
+import 'package:manager_app/widgets/my_card.dart';
 
 import '../order_router.dart';
 
@@ -14,7 +14,6 @@ const List<String> orderLeftButtonText = ['拒单', '拒单', '订单跟踪', '�
 const List<String> orderRightButtonText = ['接单', '开始配送', '完成', '', ''];
 
 class OrderItem extends StatelessWidget {
-
   const OrderItem({
     super.key,
     required this.tabIndex,
@@ -23,26 +22,28 @@ class OrderItem extends StatelessWidget {
 
   final int tabIndex;
   final int index;
-  
+
   @override
   Widget build(BuildContext context) {
-
     return Padding(
-      padding: const EdgeInsets.only(top: 8.0),
-      child: MyCard(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: InkWell(
-            onTap: () => NavigatorUtils.push(context, OrderRouter.orderInfoPage),
-            child: _buildContent(context),
+        padding: const EdgeInsets.only(top: 8.0),
+        child: MyCard(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: InkWell(
+              onTap: () =>
+                  NavigatorUtils.push(context, OrderRouter.orderInfoPage),
+              child: _buildContent(context),
+            ),
           ),
-        ),
-      )
-    );
+        ));
   }
 
   Widget _buildContent(BuildContext context) {
-    final TextStyle? textTextStyle = Theme.of(context).textTheme.bodyText2?.copyWith(fontSize: Dimens.font_sp12);
+    final TextStyle? textTextStyle = Theme.of(context)
+        .textTheme
+        .bodyText2
+        ?.copyWith(fontSize: Dimens.font_sp12);
     final bool isDark = context.isDark;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,7 +75,8 @@ class OrderItem extends StatelessWidget {
             style: textTextStyle,
             children: <TextSpan>[
               const TextSpan(text: '清凉一度抽纸'),
-              TextSpan(text: '  x1', style: Theme.of(context).textTheme.subtitle2),
+              TextSpan(
+                  text: '  x1', style: Theme.of(context).textTheme.subtitle2),
             ],
           ),
         ),
@@ -84,7 +86,8 @@ class OrderItem extends StatelessWidget {
             style: textTextStyle,
             children: <TextSpan>[
               const TextSpan(text: '清凉一度抽纸'),
-              TextSpan(text: '  x2', style: Theme.of(context).textTheme.subtitle2),
+              TextSpan(
+                  text: '  x2', style: Theme.of(context).textTheme.subtitle2),
             ],
           ),
         ),
@@ -96,8 +99,15 @@ class OrderItem extends StatelessWidget {
                 text: TextSpan(
                   style: textTextStyle,
                   children: <TextSpan>[
-                    TextSpan(text: Utils.formatPrice('20.00', format: MoneyFormat.NORMAL)),
-                    TextSpan(text: '  共3件商品', style: Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: Dimens.font_sp10)),
+                    TextSpan(
+                        text: Utils.formatPrice('20.00',
+                            format: MoneyFormat.NORMAL)),
+                    TextSpan(
+                        text: '  共3件商品',
+                        style: Theme.of(context)
+                            .textTheme
+                            .subtitle2
+                            ?.copyWith(fontSize: Dimens.font_sp10)),
                   ],
                 ),
               ),
@@ -134,18 +144,24 @@ class OrderItem extends StatelessWidget {
                 }
               },
             ),
-            if (orderRightButtonText[tabIndex].isEmpty) Gaps.empty else Gaps.hGap10,
-            if (orderRightButtonText[tabIndex].isEmpty) Gaps.empty else OrderItemButton(
-              key: Key('order_button_3_$index'),
-              text: orderRightButtonText[tabIndex],
-              textColor: isDark ? Colours.dark_button_text : Colors.white,
-              bgColor: isDark ? Colours.dark_app_main : Colours.app_main,
-              onTap: () {
-                if (tabIndex == 2) {
-                  _showPayTypeDialog(context);
-                }
-              },
-            ),
+            if (orderRightButtonText[tabIndex].isEmpty)
+              Gaps.empty
+            else
+              Gaps.hGap10,
+            if (orderRightButtonText[tabIndex].isEmpty)
+              Gaps.empty
+            else
+              OrderItemButton(
+                key: Key('order_button_3_$index'),
+                text: orderRightButtonText[tabIndex],
+                textColor: isDark ? Colours.dark_button_text : Colors.white,
+                bgColor: isDark ? Colours.dark_app_main : Colours.app_main,
+                onTap: () {
+                  if (tabIndex == 2) {
+                    _showPayTypeDialog(context);
+                  }
+                },
+              ),
           ],
         )
       ],
@@ -172,9 +188,13 @@ class OrderItem extends StatelessWidget {
               },
               style: ButtonStyle(
                 // 按下高亮颜色
-                overlayColor: MaterialStateProperty.all<Color>(Theme.of(context).errorColor.withOpacity(0.2)),
+                overlayColor: MaterialStateProperty.all<Color>(
+                    Theme.of(context).errorColor.withOpacity(0.2)),
               ),
-              child: Text('拨打', style: TextStyle(color: Theme.of(context).errorColor),),
+              child: Text(
+                '拨打',
+                style: TextStyle(color: Theme.of(context).errorColor),
+              ),
             ),
           ],
         );
@@ -195,25 +215,21 @@ class OrderItem extends StatelessWidget {
       },
     );
   }
-
 }
 
-
 class OrderItemButton extends StatelessWidget {
-  
-  const OrderItemButton({
-    super.key,
-    this.bgColor,
-    this.textColor,
-    required this.text,
-    this.onTap
-  });
-  
+  const OrderItemButton(
+      {super.key,
+      this.bgColor,
+      this.textColor,
+      required this.text,
+      this.onTap});
+
   final Color? bgColor;
   final Color? textColor;
   final GestureTapCallback? onTap;
   final String text;
-  
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -230,7 +246,10 @@ class OrderItemButton extends StatelessWidget {
           maxHeight: 30.0,
           minHeight: 30.0,
         ),
-        child: Text(text, style: TextStyle(fontSize: Dimens.font_sp14, color: textColor),),
+        child: Text(
+          text,
+          style: TextStyle(fontSize: Dimens.font_sp14, color: textColor),
+        ),
       ),
     );
   }

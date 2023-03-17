@@ -1,14 +1,14 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_deer/login/widgets/my_text_field.dart';
-import 'package:flutter_deer/res/resources.dart';
-import 'package:flutter_deer/routers/fluro_navigator.dart';
-import 'package:flutter_deer/util/change_notifier_manage.dart';
-import 'package:flutter_deer/util/other_utils.dart';
-import 'package:flutter_deer/util/toast_utils.dart';
-import 'package:flutter_deer/widgets/my_app_bar.dart';
-import 'package:flutter_deer/widgets/my_button.dart';
-import 'package:flutter_deer/widgets/my_scroll_view.dart';
+import 'package:manager_app/login/widgets/my_text_field.dart';
+import 'package:manager_app/res/resources.dart';
+import 'package:manager_app/routers/fluro_navigator.dart';
+import 'package:manager_app/util/change_notifier_manage.dart';
+import 'package:manager_app/util/other_utils.dart';
+import 'package:manager_app/util/toast_utils.dart';
+import 'package:manager_app/widgets/my_app_bar.dart';
+import 'package:manager_app/widgets/my_button.dart';
+import 'package:manager_app/widgets/my_scroll_view.dart';
 import 'package:flutter_gen/gen_l10n/deer_localizations.dart';
 
 import '../login_router.dart';
@@ -21,8 +21,8 @@ class SMSLoginPage extends StatefulWidget {
   _SMSLoginPageState createState() => _SMSLoginPageState();
 }
 
-class _SMSLoginPageState extends State<SMSLoginPage> with ChangeNotifierMixin<SMSLoginPage> {
-
+class _SMSLoginPageState extends State<SMSLoginPage>
+    with ChangeNotifierMixin<SMSLoginPage> {
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _vCodeController = TextEditingController();
   final FocusNode _nodeText1 = FocusNode();
@@ -66,7 +66,8 @@ class _SMSLoginPageState extends State<SMSLoginPage> with ChangeNotifierMixin<SM
     return Scaffold(
       appBar: const MyAppBar(),
       body: MyScrollView(
-        keyboardConfig: Utils.getKeyboardActionsConfig(context, <FocusNode>[_nodeText1, _nodeText2]),
+        keyboardConfig: Utils.getKeyboardActionsConfig(
+            context, <FocusNode>[_nodeText1, _nodeText2]),
         padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 20.0),
         children: _buildBody(),
       ),
@@ -105,7 +106,10 @@ class _SMSLoginPageState extends State<SMSLoginPage> with ChangeNotifierMixin<SM
         child: RichText(
           text: TextSpan(
             text: DeerLocalizations.of(context)!.registeredTips,
-            style: Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: Dimens.font_sp14),
+            style: Theme.of(context)
+                .textTheme
+                .subtitle2
+                ?.copyWith(fontSize: Dimens.font_sp14),
             children: <TextSpan>[
               TextSpan(
                 text: DeerLocalizations.of(context)!.register,
@@ -117,7 +121,9 @@ class _SMSLoginPageState extends State<SMSLoginPage> with ChangeNotifierMixin<SM
                     NavigatorUtils.push(context, LoginRouter.registerPage);
                   },
               ),
-              TextSpan(text: Utils.getCurrLocale() == 'zh' ? '。' : '.',),
+              TextSpan(
+                text: Utils.getCurrLocale() == 'zh' ? '。' : '.',
+              ),
             ],
           ),
         ),
@@ -135,7 +141,8 @@ class _SMSLoginPageState extends State<SMSLoginPage> with ChangeNotifierMixin<SM
             DeerLocalizations.of(context)!.forgotPasswordLink,
             style: Theme.of(context).textTheme.subtitle2,
           ),
-          onTap: () => NavigatorUtils.push(context, LoginRouter.resetPasswordPage),
+          onTap: () =>
+              NavigatorUtils.push(context, LoginRouter.resetPasswordPage),
         ),
       )
     ];
