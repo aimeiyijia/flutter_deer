@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/deer_localizations.dart';
 import 'package:manager_app/login/widgets/my_text_field.dart';
 import 'package:manager_app/res/constant.dart';
 import 'package:manager_app/res/resources.dart';
@@ -7,10 +8,11 @@ import 'package:manager_app/routers/fluro_navigator.dart';
 import 'package:manager_app/store/store_router.dart';
 import 'package:manager_app/util/change_notifier_manage.dart';
 import 'package:manager_app/util/other_utils.dart';
+import 'package:manager_app/util/image_utils.dart';
+import 'package:manager_app/widgets/load_image.dart';
 import 'package:manager_app/widgets/my_app_bar.dart';
 import 'package:manager_app/widgets/my_button.dart';
 import 'package:manager_app/widgets/my_scroll_view.dart';
-import 'package:flutter_gen/gen_l10n/deer_localizations.dart';
 import 'package:sp_util/sp_util.dart';
 
 import '../login_router.dart';
@@ -81,28 +83,53 @@ class _LoginPageState extends State<LoginPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(
-        isBack: false,
-        actionName: DeerLocalizations.of(context)!.verificationCodeLogin,
-        onPressed: () {
-          NavigatorUtils.push(context, LoginRouter.smsLoginPage);
-        },
-      ),
-      body: MyScrollView(
-        keyboardConfig: Utils.getKeyboardActionsConfig(
-            context, <FocusNode>[_nodeText1, _nodeText2]),
-        padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 20.0),
-        children: _buildBody,
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                alignment: Alignment.topCenter,
+                image: ImageUtils.getAssetImage('login/login_form_bg'),
+                fit: BoxFit.fitWidth,
+              ),
+            ),
+          ),
+          Positioned(left: 12, top: 120, child: Text('12312331323121')),
+          Positioned(
+            top: 230,
+            width: MediaQuery.of(context).size.width,
+            child: Padding(
+              padding: EdgeInsets.all(24.00),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: [
+                    //卡片阴影
+                    BoxShadow(
+                      color: Colors.black54,
+                      offset: Offset(2.0, 2.0),
+                      blurRadius: 4.0,
+                    )
+                  ],
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(24.00),
+                  child: Column(
+                    children: [
+                      ..._buildForms
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  List<Widget> get _buildBody => <Widget>[
-        Text(
-          DeerLocalizations.of(context)!.passwordLogin,
-          style: TextStyles.textBold26,
-        ),
-        Gaps.vGap16,
+  List<Widget> get _buildForms => <Widget>[
         MyTextField(
           key: const Key('phone'),
           focusNode: _nodeText1,
