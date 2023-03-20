@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/deer_localizations.dart';
-import 'package:manager_app/login/widgets/my_text_field.dart';
 import 'package:manager_app/login/widgets/bubble_tab_indicator.dart';
+import 'package:manager_app/login/widgets/my_text_field.dart';
 import 'package:manager_app/res/constant.dart';
 import 'package:manager_app/res/resources.dart';
 import 'package:manager_app/routers/fluro_navigator.dart';
 import 'package:manager_app/store/store_router.dart';
 import 'package:manager_app/util/change_notifier_manage.dart';
-import 'package:manager_app/util/other_utils.dart';
 import 'package:manager_app/util/image_utils.dart';
-import 'package:manager_app/widgets/load_image.dart';
-import 'package:manager_app/widgets/my_app_bar.dart';
+import 'package:manager_app/util/other_utils.dart';
 import 'package:manager_app/widgets/my_button.dart';
-import 'package:manager_app/widgets/my_scroll_view.dart';
 import 'package:sp_util/sp_util.dart';
 
 import '../login_router.dart';
@@ -28,6 +25,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage>
     with ChangeNotifierMixin<LoginPage>, SingleTickerProviderStateMixin {
+  // 登录类型切换
   late TabController _tabController;
 
   //定义一个controller
@@ -104,16 +102,16 @@ class _LoginPageState extends State<LoginPage>
             left: 0,
             // width: MediaQuery.of(context).size.width,
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient: LinearGradient(colors: [
                   Color(0xFF1893ff),
                   Color(0xe99fd),
                 ]),
               ),
               child: Padding(
-                padding: EdgeInsets.fromLTRB(24, 12, 90, 12),
+                padding: const EdgeInsets.fromLTRB(24, 12, 90, 12),
                 child: Column(
-                  children: [
+                  children: const [
                     Text(
                       '欢迎登录',
                       style: TextStyle(
@@ -125,11 +123,10 @@ class _LoginPageState extends State<LoginPage>
                     Text(
                       '破产平台',
                       style: TextStyle(
-                        fontSize: 24,
-                        color: Color(0xFFfcff1c),
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.w800
-                      ),
+                          fontSize: 24,
+                          color: Color(0xFFfcff1c),
+                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.w800),
                     ),
                   ],
                 ),
@@ -140,28 +137,27 @@ class _LoginPageState extends State<LoginPage>
             top: 230,
             width: MediaQuery.of(context).size.width,
             child: Padding(
-              padding: EdgeInsets.all(24.00),
+              padding: const EdgeInsets.all(24.00),
               child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
                   boxShadow: [
-                    //卡片阴影
                     BoxShadow(
-                      color: Colors.black54,
-                      offset: Offset(2.0, 2.0),
-                      blurRadius: 4.0,
+                      color: Color(0xFFe2e2e2),
+                      blurRadius: 20.0,
                     )
                   ],
                 ),
                 child: Padding(
-                  padding: EdgeInsets.all(24.00),
+                  padding: const EdgeInsets.all(24.00),
                   child: Column(
                     children: [
                       TabBar(
                         labelColor: Colors.blueAccent,
-                        indicator: new BubbleTabIndicator(),
+                        indicator: const BubbleTabIndicator(),
                         controller: _tabController,
-                        tabs: [
+                        tabs: const [
                           Tab(text: '账号'),
                           Tab(text: '证件号码'),
                           Tab(text: '手机号码'),
