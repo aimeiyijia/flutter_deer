@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/deer_localizations.dart';
+import 'package:manager_app/login/presenter/login_presenter.dart';
 import 'package:manager_app/login/widgets/bubble_tab_indicator.dart';
 import 'package:manager_app/login/widgets/my_text_field.dart';
+import 'package:manager_app/mvp/base_page.dart';
+import 'package:manager_app/mvp/power_presenter.dart';
 import 'package:manager_app/res/constant.dart';
 import 'package:manager_app/res/resources.dart';
 import 'package:manager_app/routers/fluro_navigator.dart';
-import 'package:manager_app/store/store_router.dart';
 import 'package:manager_app/util/change_notifier_manage.dart';
 import 'package:manager_app/util/image_utils.dart';
-import 'package:manager_app/util/other_utils.dart';
 import 'package:manager_app/widgets/my_button.dart';
-import 'package:sp_util/sp_util.dart';
 
 import '../login_router.dart';
 
@@ -24,9 +24,26 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage>
-    with ChangeNotifierMixin<LoginPage>, SingleTickerProviderStateMixin {
+    with
+        BasePageMixin<LoginPage, PowerPresenter<dynamic>>,
+        ChangeNotifierMixin<LoginPage>,
+        SingleTickerProviderStateMixin {
   // 登录类型切换
   late TabController _tabController;
+
+  final _loginTypes = [
+    'acc',
+    'cer',
+    'num',
+  ];
+
+  // 登录类型
+  String _loginType = 'acc';
+  final Map<String, String> _loginUserNamePlaceholderMatch = <String, String>{
+    'acc': '请输入登录账号',
+    'num': '请输入手机号码',
+    'cer': '请输入证件号码'
+  };
 
   //定义一个controller
   final TextEditingController _nameController = TextEditingController();
@@ -34,6 +51,19 @@ class _LoginPageState extends State<LoginPage>
   final FocusNode _nodeText1 = FocusNode();
   final FocusNode _nodeText2 = FocusNode();
   bool _clickable = false;
+
+  bool _remember = false;
+
+  late LoginPresenter _loginPresenter;
+
+  @override
+  PowerPresenter<dynamic> createPresenter() {
+    final PowerPresenter<dynamic> powerPresenter =
+        PowerPresenter<dynamic>(this);
+    _loginPresenter = LoginPresenter();
+    powerPresenter.requestPresenter([_loginPresenter]);
+    return powerPresenter;
+  }
 
   @override
   Map<ChangeNotifier, List<VoidCallback>?>? changeNotifier() {
@@ -55,17 +85,19 @@ class _LoginPageState extends State<LoginPage>
           overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
     });
     _tabController = TabController(vsync: this, length: 3);
-    _nameController.text = SpUtil.getString(Constant.phone).nullSafe;
+
+    _nameController.text = 'gxy';
+    _passwordController.text = 'Pcgl1234';
   }
 
   void _verify() {
     final String name = _nameController.text;
     final String password = _passwordController.text;
     bool clickable = true;
-    if (name.isEmpty || name.length < 6) {
+    if (name.isEmpty) {
       clickable = false;
     }
-    if (password.isEmpty || password.length < 6) {
+    if (password.isEmpty) {
       clickable = false;
     }
 
@@ -78,8 +110,8 @@ class _LoginPageState extends State<LoginPage>
   }
 
   void _login() {
-    SpUtil.putString(Constant.phone, _nameController.text);
-    NavigatorUtils.push(context, StoreRouter.auditPage);
+    _loginPresenter.login(
+        _loginType, _nameController.text, _passwordController.text);
   }
 
   @override
@@ -105,7 +137,7 @@ class _LoginPageState extends State<LoginPage>
               decoration: const BoxDecoration(
                 gradient: LinearGradient(colors: [
                   Color(0xFF1893ff),
-                  Color(0xe99fd),
+                  Color(0xE99fd),
                 ]),
               ),
               child: Padding(
@@ -162,6 +194,11 @@ class _LoginPageState extends State<LoginPage>
                           Tab(text: '证件号码'),
                           Tab(text: '手机号码'),
                         ],
+                        onTap: (e) => {
+                          setState(() {
+                            _loginType = _loginTypes[e];
+                          })
+                        },
                       ),
                       ..._buildForms
                     ],
@@ -182,7 +219,7 @@ class _LoginPageState extends State<LoginPage>
           controller: _nameController,
           maxLength: 11,
           keyboardType: TextInputType.phone,
-          hintText: DeerLocalizations.of(context)!.inputUsernameHint,
+          hintText: _loginUserNamePlaceholderMatch[_loginType]!,
         ),
         Gaps.vGap8,
         MyTextField(
@@ -201,18 +238,50 @@ class _LoginPageState extends State<LoginPage>
           text: DeerLocalizations.of(context)!.login,
         ),
         Container(
-          height: 40.0,
-          alignment: Alignment.centerRight,
-          child: GestureDetector(
-            child: Text(
-              DeerLocalizations.of(context)!.forgotPasswordLink,
-              key: const Key('forgotPassword'),
-              style: Theme.of(context).textTheme.subtitle2,
-            ),
-            onTap: () =>
-                NavigatorUtils.push(context, LoginRouter.resetPasswordPage),
-          ),
-        ),
+            height: 36.0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
+                      child: SizedBox(
+                        height: 14.0,
+                        width: 14.0,
+                        child: Checkbox(
+                          value: _remember,
+                          side:
+                              BorderSide(color: Theme.of(context).primaryColor),
+                          activeColor: Theme.of(context).primaryColor,
+                          //选中时的颜色
+                          shape: CircleBorder(),
+                          onChanged: (value) {
+                            setState(() {
+                              _remember = value!;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                    Text(
+                      '记住密码',
+                      key: Key('remeber'),
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
+                  ],
+                ),
+                GestureDetector(
+                  child: Text(
+                    DeerLocalizations.of(context)!.forgotPasswordLink,
+                    key: const Key('forgotPassword'),
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                  onTap: () => NavigatorUtils.push(
+                      context, LoginRouter.resetPasswordPage),
+                ),
+              ],
+            )),
         Gaps.vGap16,
         Container(
             alignment: Alignment.center,

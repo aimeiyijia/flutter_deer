@@ -12,7 +12,7 @@ class UserEntity {
 
   @JSONField(name: 'avatar_url')
   String? avatarUrl;
-  String? name;
+  String? userName;
   int? id;
   String? blog;
 }

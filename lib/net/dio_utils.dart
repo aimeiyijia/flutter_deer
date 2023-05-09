@@ -33,7 +33,6 @@ typedef NetSuccessCallback<T> = Function(T data);
 typedef NetSuccessListCallback<T> = Function(List<T> data);
 typedef NetErrorCallback = Function(int code, String msg);
 
-/// @weilu https://github.com/simplezhli
 class DioUtils {
   factory DioUtils() => _singleton;
 
@@ -98,7 +97,9 @@ class DioUtils {
       cancelToken: cancelToken,
     );
     try {
-      final String data = response.data.toString();
+      // Log.json(response.toString(), tag: '99999999');
+      //response.data
+      final String data = response.toString();
 
       /// 集成测试无法使用 isolate https://github.com/flutter/flutter/issues/24703
       /// 使用compute条件：数据大于10KB（粗略使用10 * 1024）且当前不是集成测试（后面可能会根据Web环境进行调整）
@@ -138,7 +139,7 @@ class DioUtils {
       options: options,
       cancelToken: cancelToken,
     ).then<void>((BaseEntity<T> result) {
-      if (result.code == 0) {
+      if (result.code == 200) {
         onSuccess?.call(result.data);
       } else {
         _onError(result.code, result.message, onError);
@@ -169,7 +170,7 @@ class DioUtils {
       options: options,
       cancelToken: cancelToken,
     )).asBroadcastStream().listen((result) {
-      if (result.code == 0) {
+      if (result.code == 200) {
         if (onSuccess != null) {
           onSuccess(result.data);
         }

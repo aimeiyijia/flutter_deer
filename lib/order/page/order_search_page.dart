@@ -108,6 +108,6 @@ class _OrderSearchPageState extends State<OrderSearchPage>
 
   @override
   void setUser(UserEntity? user) {
-    showToast(user?.name ?? '');
+    showToast(user?.userName ?? '');
   }
 }

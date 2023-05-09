@@ -77,9 +77,7 @@ class _SettingPageState extends State<SettingPage> {
               if (Device.isMobile)
                 ClickItem(
                   title: 'Deer Web版',
-                  onTap: () => NavigatorUtils.goWebViewPage(
-                      context,
-                      'Flutter Deer',
+                  onTap: () => NavigatorUtils.goWebViewPage(context, '管理人平台',
                       'https://simplezhli.github.io/manager_app/'),
                 ),
               ClickItem(

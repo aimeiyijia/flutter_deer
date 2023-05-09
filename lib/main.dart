@@ -10,6 +10,7 @@ import 'package:manager_app/routers/not_found_page.dart';
 import 'package:manager_app/routers/routers.dart';
 import 'package:manager_app/setting/provider/locale_provider.dart';
 import 'package:manager_app/setting/provider/theme_provider.dart';
+import 'package:manager_app/stores/provider/userInfo_provider.dart';
 import 'package:manager_app/util/device_utils.dart';
 import 'package:manager_app/util/handle_error_utils.dart';
 import 'package:manager_app/util/log_utils.dart';
@@ -78,7 +79,7 @@ class MyApp extends StatelessWidget {
     /// 适配数据(根据自己的数据结构，可自行选择添加)
     interceptors.add(AdapterInterceptor());
     configDio(
-      baseUrl: 'https://api.github.com/',
+      baseUrl: 'http://192.168.100.229:8081',
       interceptors: interceptors,
     );
   }
@@ -110,7 +111,8 @@ class MyApp extends StatelessWidget {
     final Widget app = MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
-        ChangeNotifierProvider(create: (_) => LocaleProvider())
+        ChangeNotifierProvider(create: (_) => LocaleProvider()),
+        ChangeNotifierProvider(create: (_) => UserInfoProvider())
       ],
       child: Consumer2<ThemeProvider, LocaleProvider>(
         builder:
@@ -133,7 +135,7 @@ class MyApp extends StatelessWidget {
   Widget _buildMaterialApp(
       ThemeProvider provider, LocaleProvider localeProvider) {
     return MaterialApp(
-      title: 'Flutter Deer',
+      title: '管理人平台',
       // showPerformanceOverlay: true, //显示性能标签
       // debugShowCheckedModeBanner: false, // 去除右上角debug的标签
       // checkerboardRasterCacheImages: true,
@@ -147,7 +149,8 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: Routes.router.generator,
       localizationsDelegates: DeerLocalizations.localizationsDelegates,
       supportedLocales: DeerLocalizations.supportedLocales,
-      locale: localeProvider.locale,
+      // locale: localeProvider.locale,
+      locale: const Locale('zh', 'CN'),
       navigatorKey: navigatorKey,
       builder: (BuildContext context, Widget? child) {
         /// 仅针对安卓

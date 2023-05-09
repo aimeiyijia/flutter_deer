@@ -1,7 +1,10 @@
 import 'package:manager_app/generated/json/base/json_convert_content.dart';
 import 'package:manager_app/res/constant.dart';
+import 'package:manager_app/util/log_utils.dart';
 
 class BaseEntity<T> {
+  @override
+
   BaseEntity(this.code, this.message, this.data);
 
   BaseEntity.fromJson(Map<String, dynamic> json) {

@@ -90,7 +90,7 @@ class _AboutPageState extends State<AboutPage> {
               title: 'Github',
               content: 'Go Star',
               onTap: () => _launchWebURL(
-                  'Flutter Deer', 'https://github.com/simplezhli/manager_app')),
+                  '管理人平台', 'https://github.com/simplezhli/manager_app')),
           ClickItem(
               title: '作者博客',
               onTap: () =>
